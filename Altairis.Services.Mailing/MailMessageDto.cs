@@ -15,6 +15,8 @@ namespace Altairis.Services.Mailing {
 
         public IList<MailAddressDto> Bcc { get; set; } = new List<MailAddressDto>();
 
+        public IList<MailAddressDto> ReplyTo { get; set; } = new List<MailAddressDto>();
+
         public IList<KeyValuePair<string, string>> CustomHeaders { get; set; } = new List<KeyValuePair<string, string>>();
 
         public string Subject { get; set; }
