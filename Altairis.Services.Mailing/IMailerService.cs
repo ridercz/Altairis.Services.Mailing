@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Altairis.Services.Mailing {
     public interface IMailerService {
 
-        Task SendMessage(MailMessageDto message);
+        Task SendMessageAsync(MailMessageDto message);
 
     }
 }
