@@ -7,7 +7,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 
 namespace Altairis.Services.Mailing.Rfc2822 {
-    public class SmtpServerMailService : IMailerService {
+    public class SmtpServerMailService : MailerServiceBase {
 
         public string HostName { get; }
 
@@ -21,16 +21,16 @@ namespace Altairis.Services.Mailing.Rfc2822 {
 
         public RemoteCertificateValidationCallback ServerCertificateValidationCallback { get; }
 
-        public SmtpServerMailService(string hostName, int port, string userName, string password, bool allowSsl, RemoteCertificateValidationCallback sslCallback) {
-            this.HostName = hostName;
-            this.Port = port;
-            this.UserName = userName;
-            this.Password = password;
-            this.AllowSsl = allowSsl;
-            this.ServerCertificateValidationCallback = sslCallback;
+        public SmtpServerMailService(SmtpServerMailServiceOptions options) : base(options) {
+            this.HostName = options.HostName;
+            this.Port = options.Port;
+            this.UserName = options.UserName;
+            this.Password = options.Password;
+            this.AllowSsl = options.AllowSsl;
+            this.ServerCertificateValidationCallback = options.ServerCertificateValidationCallback;
         }
 
-        public async Task SendMessageAsync(MailMessageDto message) {
+        protected override async Task SendMessageAsyncInternal(MailMessageDto message) {
             if (message == null) throw new ArgumentNullException(nameof(message));
 
             // Get MIME message
@@ -45,6 +45,5 @@ namespace Altairis.Services.Mailing.Rfc2822 {
                 await mx.DisconnectAsync(true);
             }
         }
-
     }
 }
