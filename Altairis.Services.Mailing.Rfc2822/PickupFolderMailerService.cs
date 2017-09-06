@@ -6,13 +6,13 @@ using System.IO;
 using System.Linq;
 
 namespace Altairis.Services.Mailing.Rfc2822 {
-    public class PickupFolderMailService : MailerServiceBase {
+    public class PickupFolderMailerService : MailerServiceBase {
 
         public Func<string> TempFileNameFactory { get; }
 
         public string PickupFolderName { get; }
 
-        public PickupFolderMailService(PickupFolderMailServiceOptions options) : base(options) {
+        public PickupFolderMailerService(PickupFolderMailerServiceOptions options) : base(options) {
             if (options.PickupFolderName == null) throw new ArgumentException("Pickup folder name cannot be null.", nameof(options));
             if (string.IsNullOrWhiteSpace(options.PickupFolderName)) throw new ArgumentException("Pickup folder name cannot be empty or whitespace only string.", nameof(options));
             if (!Directory.Exists(options.PickupFolderName)) throw new DirectoryNotFoundException();
@@ -21,8 +21,8 @@ namespace Altairis.Services.Mailing.Rfc2822 {
             this.TempFileNameFactory = options.TempFileNameFactory ?? Path.GetTempFileName;
         }
 
-        public PickupFolderMailService(string pickupFolderName, Func<string> tempFileNameFactory = null)
-            : this(new PickupFolderMailServiceOptions {
+        public PickupFolderMailerService(string pickupFolderName, Func<string> tempFileNameFactory = null)
+            : this(new PickupFolderMailerServiceOptions {
                 PickupFolderName = pickupFolderName,
                 TempFileNameFactory = tempFileNameFactory
             }) { }

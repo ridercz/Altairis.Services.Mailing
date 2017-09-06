@@ -4,7 +4,7 @@ using System.Net.Security;
 using System.Text;
 
 namespace Altairis.Services.Mailing.Rfc2822 {
-    public class SmtpServerMailServiceOptions : MailerServiceOptions {
+    public class SmtpServerMailerServiceOptions : MailerServiceOptions {
 
         public string HostName { get; set; }
 

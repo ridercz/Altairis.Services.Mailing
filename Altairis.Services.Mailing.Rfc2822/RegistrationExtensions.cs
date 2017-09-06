@@ -7,8 +7,8 @@ using System.Text;
 namespace Microsoft.Extensions.DependencyInjection {
     public static class RegistrationExtensions {
 
-        public static IServiceCollection AddPickupFolderMailService(this IServiceCollection services, PickupFolderMailServiceOptions options) {
-            services.AddSingleton<IMailerService>(new PickupFolderMailService(options));
+        public static IServiceCollection AddPickupFolderMailService(this IServiceCollection services, PickupFolderMailerServiceOptions options) {
+            services.AddSingleton<IMailerService>(new PickupFolderMailerService(options));
             return services;
         }
 
@@ -16,13 +16,13 @@ namespace Microsoft.Extensions.DependencyInjection {
             if (pickupFolderName == null) throw new ArgumentNullException(nameof(pickupFolderName));
             if (string.IsNullOrWhiteSpace(pickupFolderName)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(pickupFolderName));
 
-            var options = new PickupFolderMailServiceOptions { PickupFolderName = pickupFolderName };
-            services.AddSingleton<IMailerService>(new PickupFolderMailService(options));
+            var options = new PickupFolderMailerServiceOptions { PickupFolderName = pickupFolderName };
+            services.AddSingleton<IMailerService>(new PickupFolderMailerService(options));
             return services;
         }
 
-        public static IServiceCollection AddSmtpServerMailService(this IServiceCollection services, SmtpServerMailServiceOptions options) {
-            services.AddSingleton<IMailerService>(new SmtpServerMailService(options));
+        public static IServiceCollection AddSmtpServerMailService(this IServiceCollection services, SmtpServerMailerServiceOptions options) {
+            services.AddSingleton<IMailerService>(new SmtpServerMailerService(options));
             return services;
         }
 

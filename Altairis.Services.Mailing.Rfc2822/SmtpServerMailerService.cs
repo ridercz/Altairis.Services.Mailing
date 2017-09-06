@@ -7,7 +7,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 
 namespace Altairis.Services.Mailing.Rfc2822 {
-    public class SmtpServerMailService : MailerServiceBase {
+    public class SmtpServerMailerService : MailerServiceBase {
 
         public string HostName { get; }
 
@@ -21,7 +21,7 @@ namespace Altairis.Services.Mailing.Rfc2822 {
 
         public RemoteCertificateValidationCallback ServerCertificateValidationCallback { get; }
 
-        public SmtpServerMailService(SmtpServerMailServiceOptions options) : base(options) {
+        public SmtpServerMailerService(SmtpServerMailerServiceOptions options) : base(options) {
             this.HostName = options.HostName;
             this.Port = options.Port;
             this.UserName = options.UserName;

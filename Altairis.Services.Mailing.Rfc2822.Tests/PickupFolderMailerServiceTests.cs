@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Xunit;
 
 namespace Altairis.Services.Mailing.Rfc2822.Tests {
-    public class PickupFolderMailServiceTests {
+    public class PickupFolderMailerServiceTests {
 
         [Fact]
         public async Task SendPlainTextMail_Test() {
-            var mx = new PickupFolderMailService(CreateTempFolder("plain"));
+            var mx = new PickupFolderMailerService(CreateTempFolder("plain"));
             var msg = new MailMessageDto {
                 From = new MailAddressDto("sender@example.com", "Example Sender"),
                 Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
@@ -23,7 +23,7 @@ namespace Altairis.Services.Mailing.Rfc2822.Tests {
 
         [Fact]
         public async Task SendHtmlMail_Test() {
-            var mx = new PickupFolderMailService(CreateTempFolder("html"));
+            var mx = new PickupFolderMailerService(CreateTempFolder("html"));
             var msg = new MailMessageDto {
                 From = new MailAddressDto("sender@example.com", "Example Sender"),
                 Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
@@ -37,7 +37,7 @@ namespace Altairis.Services.Mailing.Rfc2822.Tests {
 
         [Fact]
         public async Task SendAlternateMail_Test() {
-            var mx = new PickupFolderMailService(CreateTempFolder("alternate"));
+            var mx = new PickupFolderMailerService(CreateTempFolder("alternate"));
             var msg = new MailMessageDto {
                 From = new MailAddressDto("sender@example.com", "Example Sender"),
                 Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
@@ -52,7 +52,7 @@ namespace Altairis.Services.Mailing.Rfc2822.Tests {
 
         [Fact]
         public async Task SendMailWithAttachment_Test() {
-            var mx = new PickupFolderMailService(CreateTempFolder("attachment"));
+            var mx = new PickupFolderMailerService(CreateTempFolder("attachment"));
             var msg = new MailMessageDto {
                 From = new MailAddressDto("sender@example.com", "Example Sender"),
                 Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
@@ -71,7 +71,7 @@ namespace Altairis.Services.Mailing.Rfc2822.Tests {
 
         [Fact]
         public async Task SendMailWithOptions_Test() {
-            var options = new PickupFolderMailServiceOptions {
+            var options = new PickupFolderMailerServiceOptions {
                 BodyHtmlFormat = "<html><body>{0}<hr/>This is footer</body></html>",
                 BodyTextFormat = "{0}\r\n--\r\nThis is footer",
                 SubjectFormat = "[test] {0}",
@@ -80,7 +80,7 @@ namespace Altairis.Services.Mailing.Rfc2822.Tests {
                 PickupFolderName = CreateTempFolder("options")
             };
 
-            var mx = new PickupFolderMailService(options);
+            var mx = new PickupFolderMailerService(options);
             var msg = new MailMessageDto {
                 Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
                 BodyText = "luouèkı kùò úpìl ïábelské ódy - text.",
