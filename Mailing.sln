@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing", "Altairis.Services.Mailing\Altairis.Services.Mailing.csproj", "{2B14E0FD-0EB0-447E-9447-9EA41D502DE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altairis.Services.Mailing.Rfc2822", "Altairis.Services.Mailing.Rfc2822\Altairis.Services.Mailing.Rfc2822.csproj", "{331F8EE8-D9CB-43F8-8F04-E9848E2874A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.Rfc2822", "Altairis.Services.Mailing.Rfc2822\Altairis.Services.Mailing.Rfc2822.csproj", "{331F8EE8-D9CB-43F8-8F04-E9848E2874A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altairis.Services.Mailing.Rfc2822.Tests", "Altairis.Services.Mailing.Rfc2822.Tests\Altairis.Services.Mailing.Rfc2822.Tests.csproj", "{A036EBAA-5BFC-4A70-9966-DCBB50A33E64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.Rfc2822.Tests", "Altairis.Services.Mailing.Rfc2822.Tests\Altairis.Services.Mailing.Rfc2822.Tests.csproj", "{A036EBAA-5BFC-4A70-9966-DCBB50A33E64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.SystemNetMail", "Altairis.Services.Mailing.SystemNetMail\Altairis.Services.Mailing.SystemNetMail.csproj", "{94A85F98-D8B8-436A-9D66-E350C3ADAB46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altairis.Services.Mailing.SystemNetMail.Tests", "Altairis.Services.Mailing.SystemNetMail.Tests\Altairis.Services.Mailing.SystemNetMail.Tests.csproj", "{1EF96AA3-6863-4D3C-88F9-E6F42833EAB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +31,19 @@ Global
 		{A036EBAA-5BFC-4A70-9966-DCBB50A33E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A036EBAA-5BFC-4A70-9966-DCBB50A33E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A036EBAA-5BFC-4A70-9966-DCBB50A33E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A85F98-D8B8-436A-9D66-E350C3ADAB46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A85F98-D8B8-436A-9D66-E350C3ADAB46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A85F98-D8B8-436A-9D66-E350C3ADAB46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A85F98-D8B8-436A-9D66-E350C3ADAB46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EF96AA3-6863-4D3C-88F9-E6F42833EAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF96AA3-6863-4D3C-88F9-E6F42833EAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF96AA3-6863-4D3C-88F9-E6F42833EAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF96AA3-6863-4D3C-88F9-E6F42833EAB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94701BF1-AE0B-4766-ABD4-A392924A9730}
 	EndGlobalSection
 EndGlobal
