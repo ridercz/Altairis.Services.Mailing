@@ -25,7 +25,7 @@ namespace Altairis.Services.Mailing {
 
         public string BodyHtml { get; set; }
 
-        public IList<AttachmentDto> Attachments { get; } = new List<AttachmentDto>();
+        public IList<AttachmentDto> Attachments { get; set; } = new List<AttachmentDto>();
 
     }
 }

@@ -47,7 +47,8 @@ namespace Altairis.Services.Mailing {
                 ReplyTo = message.ReplyTo,
                 Sender = message.Sender ?? this.DefaultSender,
                 Subject = this.GetFormattedString(this.SubjectFormat, message.Subject),
-                To = message.To
+                To = message.To,
+                Attachments = message.Attachments
             };
 
             // Defer to actual implementation to really send message
