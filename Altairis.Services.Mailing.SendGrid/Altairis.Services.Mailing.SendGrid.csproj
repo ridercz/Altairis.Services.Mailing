@@ -8,4 +8,8 @@
     <PackageReference Include="Sendgrid" Version="9.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
+  </ItemGroup>
+
 </Project>
