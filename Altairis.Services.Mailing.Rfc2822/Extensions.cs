@@ -32,8 +32,7 @@ namespace Altairis.Services.Mailing.Rfc2822 {
 
             // Add attachments
             foreach (var item in dto.Attachments) {
-                ContentType ct;
-                var r = ContentType.TryParse(item.MimeType, out ct);
+                var r = ContentType.TryParse(item.MimeType, out var ct);
                 if (!r) ct = new ContentType("application", "octet-stream");
                 bb.Attachments.Add(item.Name, item.Stream, ct);
             }
