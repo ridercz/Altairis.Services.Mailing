@@ -103,7 +103,7 @@ namespace Altairis.Services.Mailing.SystemNetMail.Tests {
         }
 
         private static string CreateTempFolder(string suffix) {
-            var folderName = Path.Combine(Path.GetTempPath(), "PickupFolderMailServiceTest", DateTime.Now.ToString("yyyyMMdd-HHmmss-fffffff") + "-" + suffix);
+            var folderName = Path.Combine(Path.GetTempPath(), "__TEST__SystemNetMail", DateTime.Now.ToString("yyyyMMdd-HHmmss-fffffff") + "-" + suffix);
             Directory.CreateDirectory(folderName);
             return folderName;
         }

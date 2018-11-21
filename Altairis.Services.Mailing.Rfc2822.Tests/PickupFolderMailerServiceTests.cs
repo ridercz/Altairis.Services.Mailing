@@ -37,7 +37,8 @@ namespace Altairis.Services.Mailing.Rfc2822.Tests {
 
         [Fact]
         public async Task SendAlternateMail_Test() {
-            var mx = new PickupFolderMailerService(CreateTempFolder("alternate"));
+            var folderName = CreateTempFolder("alternate");
+            var mx = new PickupFolderMailerService(folderName);
             var msg = new MailMessageDto {
                 From = new MailAddressDto("sender@example.com", "Example Sender"),
                 Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
@@ -103,7 +104,7 @@ namespace Altairis.Services.Mailing.Rfc2822.Tests {
         }
 
         private static string CreateTempFolder(string suffix) {
-            var folderName = Path.Combine(Path.GetTempPath(), "PickupFolderMailServiceTest", DateTime.Now.ToString("yyyyMMdd-HHmmss-fffffff") + "-" + suffix);
+            var folderName = Path.Combine(Path.GetTempPath(), "__TEST__RFC2822", DateTime.Now.ToString("yyyyMMdd-HHmmss-fffffff") + "-" + suffix);
             Directory.CreateDirectory(folderName);
             return folderName;
         }
