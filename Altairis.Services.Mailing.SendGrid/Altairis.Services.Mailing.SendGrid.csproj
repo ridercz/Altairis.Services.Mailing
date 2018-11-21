@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Altairis.Services.Mailing.SendGrid</PackageId>
+    <Authors>Michal Altair Valášek</Authors>
+    <Company>Altairis, s. r. o.</Company>
+    <Description>E-mail sending services for ASP.NET Core applications using the SendGrid service.</Description>
+    <Copyright>(c) Altairis, 2017-2018</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
