@@ -23,9 +23,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.SendGrid.IntegrationTests", "Altairis.Services.Mailing.SendGrid.IntegrationTests\Altairis.Services.Mailing.SendGrid.IntegrationTests.csproj", "{869A42CD-3438-40C6-AFD3-89F7EF010F91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altairis.Services.Mailing.Templating", "Altairis.Services.Mailing.Templating\Altairis.Services.Mailing.Templating.csproj", "{41006714-ECE7-4BD5-B702-3E732336929E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.Templating", "Altairis.Services.Mailing.Templating\Altairis.Services.Mailing.Templating.csproj", "{41006714-ECE7-4BD5-B702-3E732336929E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altairis.Services.Mailing.Templating.Tests", "Altairis.Services.Mailing.Templating.Tests\Altairis.Services.Mailing.Templating.Tests.csproj", "{034F89FD-8310-49C6-9317-D1E5F1D86D8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.Templating.Tests", "Altairis.Services.Mailing.Templating.Tests\Altairis.Services.Mailing.Templating.Tests.csproj", "{034F89FD-8310-49C6-9317-D1E5F1D86D8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Docs", "_Docs", "{B265560E-5CFB-4F40-AA44-CF43FE232B53}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

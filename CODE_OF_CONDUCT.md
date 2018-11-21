@@ -1,7 +1,4 @@
-# Altairis.Services.Mailing
-E-mail sending services for ASP.NET Core applications
-
-## Contributor Code of Conduct
+# Contributor Code of Conduct
 
 This project adheres to No Code of Conduct. We are all adults. We accept anyone's contributions. Nothing else matters.
 
