@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection {
-    public static class RegistrationExtensions {
+    public static class AltairisServicesMailingRfc2822RegistrationExtensions {
 
         public static IServiceCollection AddPickupFolderMailerService(this IServiceCollection services, PickupFolderMailerServiceOptions options) {
             services.AddSingleton<IMailerService>(new PickupFolderMailerService(options));
