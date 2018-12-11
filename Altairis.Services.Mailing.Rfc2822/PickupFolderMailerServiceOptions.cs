@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Altairis.Services.Mailing.Rfc2822 {
     public class PickupFolderMailerServiceOptions : MailerServiceOptions {

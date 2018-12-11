@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.IO;
 using SendGrid.Helpers.Mail;
-using Altairis.Services.Mailing;
 
 namespace Altairis.Services.Mailing.SendGrid {
     internal static class Extensions {

@@ -1,9 +1,6 @@
 ﻿using Altairis.Services.Mailing;
 using Altairis.Services.Mailing.SendGrid;
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection {
     public static class AltairisServicesMailingSendGridRegistrationExtensions {

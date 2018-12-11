@@ -1,8 +1,6 @@
 ﻿using Altairis.Services.Mailing;
 using Altairis.Services.Mailing.Rfc2822;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection {
     public static class AltairisServicesMailingRfc2822RegistrationExtensions {

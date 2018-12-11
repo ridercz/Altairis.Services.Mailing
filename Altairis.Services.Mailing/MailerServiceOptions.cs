@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Altairis.Services.Mailing {
+﻿namespace Altairis.Services.Mailing {
     public class MailerServiceOptions {
 
         public MailAddressDto DefaultFrom { get; set; }

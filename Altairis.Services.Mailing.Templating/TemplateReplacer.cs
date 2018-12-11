@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Altairis.Services.Mailing.Templating {
