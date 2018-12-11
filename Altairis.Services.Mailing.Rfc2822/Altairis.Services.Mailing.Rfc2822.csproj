@@ -7,10 +7,13 @@
     <Authors>Michal Altair Valášek</Authors>
     <Company>Altairis, s. r. o.</Company>
     <Description>E-mail sending services for ASP.NET Core applications using RFC2822 format - SMTP, mail pickup folder.</Description>
-    <Copyright>(c) Altairis, 2017</Copyright>
+    <Copyright>(c) Altairis, 2017-2018</Copyright>
     <PackageLicenseUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
+    <PackageIconUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing/master/NuGet-64x64.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
