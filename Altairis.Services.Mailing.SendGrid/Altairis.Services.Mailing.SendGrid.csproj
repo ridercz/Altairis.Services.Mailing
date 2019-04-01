@@ -7,7 +7,7 @@
     <Authors>Michal Altair Valášek</Authors>
     <Company>Altairis, s. r. o.</Company>
     <Description>E-mail sending services for ASP.NET Core applications using the SendGrid service.</Description>
-    <Copyright>(c) Altairis, 2017-2018</Copyright>
+    <Copyright>(c) Altairis, 2017-2019</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
     <Version>1.0.3</Version>
