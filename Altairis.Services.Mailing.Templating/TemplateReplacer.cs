@@ -6,19 +6,24 @@ using System.Text.RegularExpressions;
 
 namespace Altairis.Services.Mailing.Templating {
     public class TemplateReplacer {
+        private readonly CultureInfo culture;
         private const string PlaceholderPattern = @"\{\{.*?\}\}";
         private readonly Dictionary<string, IFormattable> formattableValues = new Dictionary<string, IFormattable>();
         private readonly Dictionary<string, string> unformattableValues = new Dictionary<string, string>();
 
-        public TemplateReplacer(object values) {
+        public TemplateReplacer(object values, CultureInfo culture = null) {
             if (values == null) throw new ArgumentNullException(nameof(values));
+
+            this.culture = culture ?? CultureInfo.CurrentCulture;
+
 
             foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(values)) {
                 var rawValue = descriptor.GetValue(values);
 
                 if (rawValue is IFormattable) {
                     this.formattableValues.Add(descriptor.Name.ToLower(), rawValue as IFormattable);
-                } else {
+                }
+                else {
                     this.unformattableValues.Add(descriptor.Name.ToLower(), rawValue.ToString());
                 }
             }
@@ -46,17 +51,19 @@ namespace Altairis.Services.Mailing.Templating {
                 var data = placeholder.Split(new char[] { ':' }, 2);
                 key = data[0];
                 formatString = data[1];
-            } else {
+            }
+            else {
                 key = placeholder.ToLower();
             }
 
             if (string.IsNullOrWhiteSpace(formatString)) {
                 // Unformatted value
                 if (this.unformattableValues.ContainsKey(key)) return this.unformattableValues[key];
-                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key].ToString();
-            } else {
+                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key].ToString(null, this.culture);
+            }
+            else {
                 // Formatted value
-                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key].ToString(formatString, CultureInfo.CurrentCulture);
+                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key].ToString(formatString, this.culture);
                 if (this.unformattableValues.ContainsKey(key)) throw new FormatException($"Value for key '{key}' is not IFormattable, but custom format string was provided.");
             }
             throw new FormatException($"Requested key '{key}' was not found in supplied values.");
