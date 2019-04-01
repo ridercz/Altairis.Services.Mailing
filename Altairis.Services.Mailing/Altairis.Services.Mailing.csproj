@@ -8,7 +8,7 @@
     <Company>Altairis, s. r. o.</Company>
     <Description>E-mail sending services for ASP.NET Core applications.</Description>
     <Copyright>(c) Altairis, 2017-2018</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
     <Version>1.0.3</Version>
     <PackageIconUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing/master/NuGet-64x64.png</PackageIconUrl>
