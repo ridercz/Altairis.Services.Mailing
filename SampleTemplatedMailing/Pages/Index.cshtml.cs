@@ -20,9 +20,7 @@ namespace SampleTemplatedMailing.Pages {
 
         public async Task<IActionResult> OnPost() {
             // Prepare templated message
-            var msg = new TemplatedMailMessageDto { TemplateName = "Test" };
-            msg.From = new MailAddressDto("from@example.com");
-            msg.To.Add(new MailAddressDto("to@example.com"));
+            var msg = new TemplatedMailMessageDto("Test", "to@example.com");
 
             // Send message with values
             await this.mailer.SendMessageAsync(msg, new {

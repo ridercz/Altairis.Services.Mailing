@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing.Templating {
     public class TemplatedMailMessageDto {
+
+        public TemplatedMailMessageDto(string templateName, string recipientAddress) : this(templateName, new MailAddressDto(recipientAddress)) { }
+
+        public TemplatedMailMessageDto(string templateName, MailAddressDto recipient = null) {
+            if (templateName == null) throw new ArgumentNullException(nameof(templateName));
+            if (string.IsNullOrWhiteSpace(templateName)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(templateName));
+
+            this.TemplateName = templateName;
+            if (recipient != null) this.To.Add(recipient);
+        }
+
         public MailAddressDto From { get; set; }
 
         public MailAddressDto Sender { get; set; }
