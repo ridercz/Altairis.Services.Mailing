@@ -61,6 +61,57 @@ namespace SampleTemplatedMailing.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;
+        ///&lt;head&gt;
+        ///&lt;style type=&quot;text/css&quot;&gt;
+        ///body {{ background-color: #ccc; color: #000; font-family: Consolas, &apos;Courier New&apos;, Courier, monospace; }}
+        ///&lt;/style&gt;
+        ///&lt;body&gt;
+        ///&lt;p&gt;Hello,&lt;/p&gt;
+        ///{0}
+        ///&lt;hr /&gt;
+        ///&lt;p&gt;&lt;small&gt;TEST&lt;/small&gt;&lt;/p&gt;
+        ///&lt;/body&gt;
+        ///&lt;/html&gt;.
+        /// </summary>
+        public static string BodyHtmlFormatString {
+            get {
+                return ResourceManager.GetString("BodyHtmlFormatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hello,
+        ///{0}
+        ///
+        ///--
+        ///TEST.
+        /// </summary>
+        public static string BodyTextFormatString {
+            get {
+                return ResourceManager.GetString("BodyTextFormatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [TEST] {0}.
+        /// </summary>
+        public static string SubjectFormatString {
+            get {
+                return ResourceManager.GetString("SubjectFormatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Test mail body with values &lt;b&gt;{{MyValue1}}&lt;/b&gt; and &lt;b&gt;{{MyValue2}}&lt;/b&gt;. Null Value: &lt;b&gt;{{NullValue}}&lt;/b&gt;.&lt;/p&gt;.
+        /// </summary>
+        public static string Test_Html {
+            get {
+                return ResourceManager.GetString("Test_Html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Test mail subject.
         /// </summary>
         public static string Test_Subject {
