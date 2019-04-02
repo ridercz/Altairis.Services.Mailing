@@ -70,7 +70,7 @@ namespace SampleTemplatedMailing.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test mail body with value {{MyValue}}..
+        ///   Looks up a localized string similar to Test mail body with values {{MyValue1}} and {{MyValue2}}. Null Value: {{NullValue}}..
         /// </summary>
         public static string Test_Text {
             get {

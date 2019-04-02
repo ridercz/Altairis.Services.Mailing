@@ -10,7 +10,7 @@
     <Copyright>(c) Altairis, 2017-2019</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-    <Version>1.0.0-beta1</Version>
+    <Version>1.0.0-beta2</Version>
     <PackageIconUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing/master/NuGet-64x64.png</PackageIconUrl>
     <RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

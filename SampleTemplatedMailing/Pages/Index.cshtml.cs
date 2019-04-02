@@ -22,7 +22,7 @@ namespace SampleTemplatedMailing.Pages {
             var msg = new TemplatedMailMessageDto { TemplateName = "Test" };
             msg.From = new MailAddressDto("from@example.com");
             msg.To.Add(new MailAddressDto("to@example.com"));
-            await this.mailer.SendMessageAsync(msg, new { MyValue = 123 });
+            await this.mailer.SendMessageAsync(msg, new { MyValue1 = 123, MyValue2 = "TEST", NullValue = (string)null });
         }
 
     }

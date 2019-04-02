@@ -121,6 +121,6 @@
     <value>Test mail subject</value>
   </data>
   <data name="Test_Text" xml:space="preserve">
-    <value>Test mail body with value {{MyValue}}.</value>
+    <value>Test mail body with values {{MyValue1}} and {{MyValue2}}. Null Value: {{NullValue}}.</value>
   </data>
 </root>

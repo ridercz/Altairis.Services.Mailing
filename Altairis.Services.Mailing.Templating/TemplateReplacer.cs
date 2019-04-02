@@ -24,7 +24,7 @@ namespace Altairis.Services.Mailing.Templating {
                     this.formattableValues.Add(descriptor.Name.ToLower(), rawValue as IFormattable);
                 }
                 else {
-                    this.unformattableValues.Add(descriptor.Name.ToLower(), rawValue.ToString());
+                    this.unformattableValues.Add(descriptor.Name.ToLower(), rawValue?.ToString());
                 }
             }
         }
@@ -59,11 +59,11 @@ namespace Altairis.Services.Mailing.Templating {
             if (string.IsNullOrWhiteSpace(formatString)) {
                 // Unformatted value
                 if (this.unformattableValues.ContainsKey(key)) return this.unformattableValues[key];
-                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key].ToString(null, this.culture);
+                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key]?.ToString(null, this.culture);
             }
             else {
                 // Formatted value
-                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key].ToString(formatString, this.culture);
+                if (this.formattableValues.ContainsKey(key)) return this.formattableValues[key]?.ToString(formatString, this.culture);
                 if (this.unformattableValues.ContainsKey(key)) throw new FormatException($"Value for key '{key}' is not IFormattable, but custom format string was provided.");
             }
             throw new FormatException($"Requested key '{key}' was not found in supplied values.");
