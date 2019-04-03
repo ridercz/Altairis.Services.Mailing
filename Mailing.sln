@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing.Templating.Tests", "Altairis.Services.Mailing.Templating.Tests\Altairis.Services.Mailing.Templating.Tests.csproj", "{034F89FD-8310-49C6-9317-D1E5F1D86D8A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Docs", "_Docs", "{B265560E-5CFB-4F40-AA44-CF43FE232B53}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Misc", "_Misc", "{B265560E-5CFB-4F40-AA44-CF43FE232B53}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Docs", "_Docs", "{B265560E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{1C89EBC4-9C21-4F6A-B2D9-C2C49A6B7FE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleTemplatedMailing", "SampleTemplatedMailing\SampleTemplatedMailing.csproj", "{35106BBC-19B8-4A69-95C5-DD70D8BB8E01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleTemplatedMailing", "SampleTemplatedMailing\SampleTemplatedMailing.csproj", "{35106BBC-19B8-4A69-95C5-DD70D8BB8E01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

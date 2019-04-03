@@ -16,7 +16,6 @@ namespace Altairis.Services.Mailing.Templating {
 
             this.culture = culture ?? CultureInfo.CurrentCulture;
 
-
             foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(values)) {
                 var rawValue = descriptor.GetValue(values);
 
