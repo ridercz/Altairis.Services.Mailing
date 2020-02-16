@@ -37,7 +37,7 @@ namespace Altairis.Services.Mailing.Templating {
             return newMessage;
         }
 
-        protected abstract void GetTemplates(string templateName, out string subjectTemplate, out string bodyTextTemplate, out string bodyHtmlTemplate, CultureInfo uiCulture = null);
+        protected abstract void GetTemplates(string templateName, out string subjectTemplate, out string bodyTextTemplate, out string bodyHtmlTemplate, CultureInfo uiCulture);
 
         public virtual Task SendMessageAsync(TemplatedMailMessageDto message, object values) => this.SendMessageAsync(message, values, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture);
 
