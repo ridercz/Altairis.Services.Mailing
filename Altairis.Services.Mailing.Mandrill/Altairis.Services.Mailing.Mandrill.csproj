@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Altairis.Services.Mailing.Mandrill</PackageId>
+    <Authors>Michal Altair Valášek</Authors>
+    <Company>Altairis, s. r. o.</Company>
+    <Description>E-mail sending services for ASP.NET Core applications using the Mandrill service.</Description>
+    <Copyright>(c) Altairis, 2017-2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
+    <Version>1.0.0</Version>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>NuGet-64x64.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +24,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\NuGet-64x64.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
