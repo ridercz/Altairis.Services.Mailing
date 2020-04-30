@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace SampleTemplatedMailing {
     public class Startup {
         public void ConfigureServices(IServiceCollection services) {
-            services.AddMvc();
+            services.AddRazorPages();
             services.AddPickupFolderMailerService(new PickupFolderMailerServiceOptions {
                 PickupFolderName = @"C:\InetPub\MailRoot\pickup",
                 DefaultFrom = new MailAddressDto("from@example.com")
@@ -23,9 +23,12 @@ namespace SampleTemplatedMailing {
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseDeveloperExceptionPage();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => {
+                endpoints.MapRazorPages();
+            });
         }
     }
 }
