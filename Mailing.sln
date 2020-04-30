@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Altairis.Services.Mailing", "Altairis.Services.Mailing\Altairis.Services.Mailing.csproj", "{2B14E0FD-0EB0-447E-9447-9EA41D502DE4}"
 EndProject
@@ -38,6 +38,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{1C89EBC4-9C21-4F6A-B2D9-C2C49A6B7FE6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleTemplatedMailing", "SampleTemplatedMailing\SampleTemplatedMailing.csproj", "{35106BBC-19B8-4A69-95C5-DD70D8BB8E01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altairis.Services.Mailing.Mandrill", "Altairis.Services.Mailing.Mandrill\Altairis.Services.Mailing.Mandrill.csproj", "{CF20F3D0-3873-4C4E-8565-7248D1083C68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{35106BBC-19B8-4A69-95C5-DD70D8BB8E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35106BBC-19B8-4A69-95C5-DD70D8BB8E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35106BBC-19B8-4A69-95C5-DD70D8BB8E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF20F3D0-3873-4C4E-8565-7248D1083C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF20F3D0-3873-4C4E-8565-7248D1083C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF20F3D0-3873-4C4E-8565-7248D1083C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF20F3D0-3873-4C4E-8565-7248D1083C68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{41006714-ECE7-4BD5-B702-3E732336929E} = {04B7F3C7-64F3-4023-A1FF-D785823DB162}
 		{034F89FD-8310-49C6-9317-D1E5F1D86D8A} = {8EAA05A5-8C62-49D0-917A-C5C4CB029990}
 		{35106BBC-19B8-4A69-95C5-DD70D8BB8E01} = {1C89EBC4-9C21-4F6A-B2D9-C2C49A6B7FE6}
+		{CF20F3D0-3873-4C4E-8565-7248D1083C68} = {D14E1700-B6DD-4B5C-8625-6AFECDA1E38C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94701BF1-AE0B-4766-ABD4-A392924A9730}
