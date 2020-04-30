@@ -7,13 +7,14 @@
     <Authors>Michal Altair Valášek</Authors>
     <Company>Altairis, s. r. o.</Company>
     <Description>E-mail sending services for ASP.NET Core applications using the SendGrid service.</Description>
-    <Copyright>(c) Altairis, 2017-2019</Copyright>
+    <Copyright>(c) Altairis, 2017-2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-    <Version>1.0.4</Version>
-    <PackageIconUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing/master/NuGet-64x64.png</PackageIconUrl>
+    <Version>1.0.5</Version>
+    <PackageIconUrl></PackageIconUrl>
     <RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageIcon>NuGet-64x64.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\NuGet-64x64.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
