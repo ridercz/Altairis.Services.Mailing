@@ -46,7 +46,6 @@ namespace Altairis.Services.Mailing.SystemNetMail {
             }
             else {
                 // Both
-                var plainStream = new MemoryStream(Encoding.UTF8.GetBytes(dto.BodyText));
                 msg.AlternateViews.Add(new AlternateView(new MemoryStream(Encoding.UTF8.GetBytes(dto.BodyText)), "text/plain;charset=utf-8") { TransferEncoding = TransferEncoding.EightBit });
                 msg.AlternateViews.Add(new AlternateView(new MemoryStream(Encoding.UTF8.GetBytes(dto.BodyHtml)), "text/html;charset=utf-8") { TransferEncoding = TransferEncoding.EightBit });
             }
