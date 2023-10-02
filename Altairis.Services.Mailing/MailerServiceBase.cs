@@ -31,7 +31,7 @@ namespace Altairis.Services.Mailing {
 
         // Send message
 
-        public async Task SendMessageAsync(MailMessageDto message) {
+        public Task SendMessageAsync(MailMessageDto message) {
             if (message == null) throw new ArgumentNullException(nameof(message));
 
             // Create formatted message copy
@@ -50,7 +50,7 @@ namespace Altairis.Services.Mailing {
             };
 
             // Defer to actual implementation to really send message
-            await this.SendMessageAsyncInternal(newMessage);
+            return this.SendMessageAsyncInternal(newMessage);
         }
 
         protected abstract Task SendMessageAsyncInternal(MailMessageDto message);
