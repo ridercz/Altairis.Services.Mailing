@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using Altairis.Services.Mailing;
+using Altairis.Services.Mailing.SystemNetMail;
+using Altairis.Services.Mailing.Templating;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace SampleTemplatedMailing {
-    public class Program {
-        public static void Main(string[] args) {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+var builder = WebApplication.CreateBuilder(args);
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }
-}
+builder.Services.AddRazorPages();
+builder.Services.AddPickupFolderMailerService(new PickupFolderMailerServiceOptions {
+    PickupFolderName = @"C:\InetPub\MailRoot\pickup",
+    DefaultFrom = new MailAddressDto("from@example.com")
+});
+builder.Services.AddResourceTemplatedMailerService(new ResourceTemplatedMailerServiceOptions {
+    ResourceType = typeof(SampleTemplatedMailing.Resources.Mailer)
+});
+
+var app = builder.Build();
+app.MapRazorPages();
+app.Run();

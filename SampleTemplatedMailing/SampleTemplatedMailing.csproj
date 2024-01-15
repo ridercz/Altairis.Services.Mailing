@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <TargetFramework>net8</TargetFramework>
   </PropertyGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\Altairis.Services.Mailing.SystemNetMail\Altairis.Services.Mailing.SystemNetMail.csproj" />
     <ProjectReference Include="..\Altairis.Services.Mailing.Templating\Altairis.Services.Mailing.Templating.csproj" />
