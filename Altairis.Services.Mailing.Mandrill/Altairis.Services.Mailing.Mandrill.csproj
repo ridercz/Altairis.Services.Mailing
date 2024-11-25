@@ -7,10 +7,10 @@
     <Authors>Michal Altair Valášek</Authors>
     <Company>Altairis, s. r. o.</Company>
     <Description>E-mail sending services for ASP.NET Core applications using the Mandrill service.</Description>
-    <Copyright>(c) Altairis, 2017-2020</Copyright>
+    <Copyright>(c) Altairis, 2017-2024</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageIconUrl></PackageIconUrl>
     <RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -18,8 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mandrill.net" Version="8.3.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Mandrill.net" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
