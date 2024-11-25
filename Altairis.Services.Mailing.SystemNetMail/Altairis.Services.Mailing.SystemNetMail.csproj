@@ -1,35 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Altairis.Services.Mailing.SystemNetMail</PackageId>
-    <Authors>Michal Altair Valášek</Authors>
-    <Company>Altairis, s. r. o.</Company>
-    <Description>E-mail sending services for ASP.NET Core applications using System.Net.Mail in .NET Standard 2.0.</Description>
-    <Copyright>(c) Altairis, 2017-2024</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-    <Version>1.0.6</Version>
-    <PackageIconUrl></PackageIconUrl>
-    <RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageIcon>NuGet-64x64.png</PackageIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>Altairis.Services.Mailing.SystemNetMail</PackageId>
+		<Authors>Michal Altair Valášek</Authors>
+		<Company>Altairis, s. r. o.</Company>
+		<Description>E-mail sending services for ASP.NET Core applications using System.Net.Mail in .NET Standard 2.0.</Description>
+		<Copyright>(c) Altairis, 2017-2024</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
+		<Version>1.0.6</Version>
+		<RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageIcon>NuGet-64x64.png</PackageIcon>
+		<PackageOutputPath>../dist</PackageOutputPath>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\NuGet-64x64.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\NuGet-64x64.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

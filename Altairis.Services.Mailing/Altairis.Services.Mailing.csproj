@@ -11,10 +11,12 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
     <Version>1.0.5</Version>
-    <PackageIconUrl></PackageIconUrl>
     <RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>NuGet-64x64.png</PackageIcon>
+    <PackageOutputPath>../dist</PackageOutputPath>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
