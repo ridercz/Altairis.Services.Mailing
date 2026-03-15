@@ -7,11 +7,11 @@
     <Authors>Michal Altair Valášek</Authors>
     <Company>Altairis, s. r. o.</Company>
     <Description>E-mail sending services for ASP.NET Core applications.</Description>
-    <Copyright>(c) Altairis, 2017-2020</Copyright>
+    <Copyright>(c) Altairis, 2017-2026</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-    <Version>1.0.5</Version>
-    <RepositoryUrl>https://raw.githubusercontent.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
+    <Version>1.1.0</Version>
+    <RepositoryUrl>https://github.com/ridercz/Altairis.Services.Mailing/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>NuGet-64x64.png</PackageIcon>
     <PackageOutputPath>../dist</PackageOutputPath>
