@@ -1,0 +1,27 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="Altairis.Services.Mailing.Templating/Altairis.Services.Mailing.Templating.csproj" />
+    <Project Path="Altairis.Services.Mailing/Altairis.Services.Mailing.csproj" />
+  </Folder>
+  <Folder Name="/Implementations/">
+    <Project Path="Altairis.Services.Mailing.Mandrill/Altairis.Services.Mailing.Mandrill.csproj" />
+    <Project Path="Altairis.Services.Mailing.Rfc2822/Altairis.Services.Mailing.Rfc2822.csproj" />
+    <Project Path="Altairis.Services.Mailing.SendGrid/Altairis.Services.Mailing.SendGrid.csproj" />
+    <Project Path="Altairis.Services.Mailing.SystemNetMail/Altairis.Services.Mailing.SystemNetMail.csproj" />
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="SampleTemplatedMailing/SampleTemplatedMailing.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Altairis.Services.Mailing.Rfc2822.Tests/Altairis.Services.Mailing.Rfc2822.Tests.csproj" />
+    <Project Path="Altairis.Services.Mailing.SendGrid.IntegrationTests/Altairis.Services.Mailing.SendGrid.IntegrationTests.csproj" />
+    <Project Path="Altairis.Services.Mailing.SystemNetMail.Tests/Altairis.Services.Mailing.SystemNetMail.Tests.csproj" />
+    <Project Path="Altairis.Services.Mailing.Templating.Tests/Altairis.Services.Mailing.Templating.Tests.csproj" />
+  </Folder>
+  <Folder Name="/_Misc/">
+    <File Path=".gitignore" />
+    <File Path="CODE_OF_CONDUCT.md" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+</Solution>
