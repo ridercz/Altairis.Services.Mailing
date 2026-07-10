@@ -10,7 +10,7 @@
 		<Copyright>(c) Altairis, 2017-2026</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<RepositoryUrl>https://github.com/ridercz/Altairis.Services.Mailing.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageIcon>NuGet-64x64.png</PackageIcon>
@@ -20,8 +20,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MailKit" Version="4.15.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.5" />
+		<PackageReference Include="MailKit" Version="4.17.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>

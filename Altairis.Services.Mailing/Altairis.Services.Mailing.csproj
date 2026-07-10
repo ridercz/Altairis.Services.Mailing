@@ -1,29 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Altairis.Services.Mailing.Core</PackageId>
-    <Authors>Michal Altair Valášek</Authors>
-    <Company>Altairis, s. r. o.</Company>
-    <Description>E-mail sending services for ASP.NET Core applications.</Description>
-    <Copyright>(c) Altairis, 2017-2026</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
-    <Version>1.1.0</Version>
-    <RepositoryUrl>https://github.com/ridercz/Altairis.Services.Mailing/</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageIcon>NuGet-64x64.png</PackageIcon>
-    <PackageOutputPath>../dist</PackageOutputPath>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>Altairis.Services.Mailing.Core</PackageId>
+		<Authors>Michal Altair Valášek</Authors>
+		<Company>Altairis, s. r. o.</Company>
+		<Description>E-mail sending services for ASP.NET Core applications.</Description>
+		<Copyright>(c) Altairis, 2017-2026</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing/</PackageProjectUrl>
+		<Version>1.1.1</Version>
+		<RepositoryUrl>https://github.com/ridercz/Altairis.Services.Mailing/</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageIcon>NuGet-64x64.png</PackageIcon>
+		<PackageOutputPath>../dist</PackageOutputPath>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\NuGet-64x64.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\NuGet-64x64.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
