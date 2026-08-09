@@ -9,6 +9,9 @@
     <Project Path="Altairis.Services.Mailing.SendGrid/Altairis.Services.Mailing.SendGrid.csproj" />
     <Project Path="Altairis.Services.Mailing.SystemNetMail/Altairis.Services.Mailing.SystemNetMail.csproj" />
   </Folder>
+  <Folder Name="/Queue/">
+    <Project Path="Altairis.Services.Mailing.QueueSender/Altairis.Services.Mailing.QueueSender.csproj" Id="e3a94f2d-eeb3-4c59-a2c8-5a9c8b27d78f" />
+  </Folder>
   <Folder Name="/Samples/">
     <Project Path="SampleTemplatedMailing/SampleTemplatedMailing.csproj" />
   </Folder>
