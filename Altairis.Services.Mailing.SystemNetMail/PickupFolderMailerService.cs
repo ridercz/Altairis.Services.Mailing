@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.IO;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing.SystemNetMail {
     public class PickupFolderMailerService : MailerServiceBase {
@@ -21,18 +21,15 @@ namespace Altairis.Services.Mailing.SystemNetMail {
                 PickupFolderName = pickupFolderName,
             }) { }
 
-        protected override async Task SendMessageAsyncInternal(MailMessageDto message) {
+        protected override async Task SendMessageAsyncInternal(MailMessage message) {
             if (message == null) throw new ArgumentNullException(nameof(message));
-
-            // Convert to message
-            var msg = message.ToMailMessage();
 
             // Send using pickup folder
             using (var mx = new SmtpClient {
                 DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
                 PickupDirectoryLocation = this.PickupFolderName,
             }) {
-                await mx.SendMailAsync(msg);
+                await mx.SendMailAsync(message);
             }
 
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing {
@@ -19,9 +21,9 @@ namespace Altairis.Services.Mailing {
 
         // Configuration properties
 
-        public MailAddressDto DefaultFrom { get; set; }
+        public MailAddress DefaultFrom { get; set; }
 
-        public MailAddressDto DefaultSender { get; set; }
+        public MailAddress DefaultSender { get; set; }
 
         public string BodyTextFormat { get; set; }
 
@@ -31,29 +33,64 @@ namespace Altairis.Services.Mailing {
 
         // Send message
 
-        public Task SendMessageAsync(MailMessageDto message) {
+        public Task SendMessageAsync(MailMessage message) {
             if (message == null) throw new ArgumentNullException(nameof(message));
 
+            // Prepare formatted body
+            message.GetBodyParts(out var bodyText, out var bodyHtml);
+            bodyText = this.GetFormattedString(this.BodyTextFormat, bodyText);
+            bodyHtml = this.GetFormattedString(this.BodyHtmlFormat, bodyHtml);
+
             // Create formatted message copy
-            var newMessage = new MailMessageDto {
-                Bcc = message.Bcc,
-                BodyHtml = this.GetFormattedString(this.BodyHtmlFormat, message.BodyHtml),
-                BodyText = this.GetFormattedString(this.BodyTextFormat, message.BodyText),
-                Cc = message.Cc,
-                CustomHeaders = message.CustomHeaders,
+            var newMessage = new MailMessage {
+                BodyEncoding = message.BodyEncoding,
+                DeliveryNotificationOptions = message.DeliveryNotificationOptions,
                 From = message.From ?? this.DefaultFrom,
-                ReplyTo = message.ReplyTo,
+                HeadersEncoding = message.HeadersEncoding,
+                Priority = message.Priority,
                 Sender = message.Sender ?? this.DefaultSender,
                 Subject = this.GetFormattedString(this.SubjectFormat, message.Subject),
-                To = message.To,
-                Attachments = message.Attachments
+                SubjectEncoding = message.SubjectEncoding
             };
+            foreach (var item in message.To) {
+                newMessage.To.Add(item);
+            }
+            foreach (var item in message.CC) {
+                newMessage.CC.Add(item);
+            }
+            foreach (var item in message.Bcc) {
+                newMessage.Bcc.Add(item);
+            }
+            foreach (var item in message.ReplyToList) {
+                newMessage.ReplyToList.Add(item);
+            }
+            foreach (var item in message.Headers.AllKeys) {
+                newMessage.Headers.Add(item, message.Headers[item]);
+            }
+            foreach (var item in message.Attachments) {
+                newMessage.Attachments.Add(item);
+            }
+
+            if (!string.IsNullOrWhiteSpace(bodyText) && !string.IsNullOrWhiteSpace(bodyHtml)) {
+                newMessage.Body = string.Empty;
+                newMessage.IsBodyHtml = false;
+                newMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(bodyText, Encoding.UTF8, "text/plain"));
+                newMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(bodyHtml, Encoding.UTF8, "text/html"));
+            }
+            else if (!string.IsNullOrWhiteSpace(bodyHtml)) {
+                newMessage.Body = bodyHtml;
+                newMessage.IsBodyHtml = true;
+            }
+            else {
+                newMessage.Body = bodyText;
+                newMessage.IsBodyHtml = false;
+            }
 
             // Defer to actual implementation to really send message
             return this.SendMessageAsyncInternal(newMessage);
         }
 
-        protected abstract Task SendMessageAsyncInternal(MailMessageDto message);
+        protected abstract Task SendMessageAsyncInternal(MailMessage message);
 
         // Helper methods
 
@@ -62,5 +99,6 @@ namespace Altairis.Services.Mailing {
             if (string.IsNullOrWhiteSpace(format)) return s;
             return string.Format(format, s);
         }
+
     }
 }

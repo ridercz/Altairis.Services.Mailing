@@ -1,13 +1,15 @@
-﻿using System;
+using System;
 using System.IO;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing.SendGrid.IntegrationTests {
     class Program {
-        private static string _apiKey;
+        private static string apiKey;
 
         static void Main(string[] args) {
-            _apiKey = args?[0] ?? throw new ArgumentException("API key missing from command line");
+            apiKey = args?[0] ?? throw new ArgumentException("API key missing from command line");
 
             try {
                 Console.WriteLine("Sending plaintext mail...");
@@ -37,51 +39,52 @@ namespace Altairis.Services.Mailing.SendGrid.IntegrationTests {
         }
 
         private static async Task SendPlainTextMail_Test() {
-            var mx = new SendGridMailerService(_apiKey);
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@rider.cz", "Example Sender"),
+            var mx = new SendGridMailerService(apiKey);
+            var msg = new MailMessage {
+                From = new MailAddress("sender@rider.cz", "Example Sender"),
                 Subject = "Žluťoučký kůň úpěl ďábelské ódy - subject",
-                BodyText = "Žluťoučký kůň úpěl ďábelské ódy - text."
+                Body = "Žluťoučký kůň úpěl ďábelské ódy - text."
             };
-            msg.To.Add(new MailAddressDto("ponyboy@email.cz", "Example Recipient"));
+            msg.To.Add(new MailAddress("ponyboy@email.cz", "Example Recipient"));
             await mx.SendMessageAsync(msg);
         }
 
         private static async Task SendHtmlMail_Test() {
-            var mx = new SendGridMailerService(_apiKey);
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@rider.cz", "Example Sender"),
+            var mx = new SendGridMailerService(apiKey);
+            var msg = new MailMessage {
+                From = new MailAddress("sender@rider.cz", "Example Sender"),
                 Subject = "Žluťoučký kůň úpěl ďábelské ódy - subject",
-                BodyHtml = "<html><body><p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p></body></html>"
+                Body = "<html><body><p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p></body></html>",
+                IsBodyHtml = true
             };
-            msg.To.Add(new MailAddressDto("ponyboy@email.cz", "Example Recipient"));
+            msg.To.Add(new MailAddress("ponyboy@email.cz", "Example Recipient"));
             await mx.SendMessageAsync(msg);
         }
 
         private static async Task SendAlternateMail_Test() {
-            var mx = new SendGridMailerService(_apiKey);
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@rider.cz", "Example Sender"),
+            var mx = new SendGridMailerService(apiKey);
+            var msg = new MailMessage {
+                From = new MailAddress("sender@rider.cz", "Example Sender"),
                 Subject = "Žluťoučký kůň úpěl ďábelské ódy - subject",
-                BodyText = "Žluťoučký kůň úpěl ďábelské ódy - text.",
-                BodyHtml = "<html><body><p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p></body></html>"
+                Body = "Žluťoučký kůň úpěl ďábelské ódy - text."
             };
-            msg.To.Add(new MailAddressDto("ponyboy@email.cz", "Example Recipient"));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString("<html><body><p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p></body></html>", Encoding.UTF8, "text/html"));
+            msg.To.Add(new MailAddress("ponyboy@email.cz", "Example Recipient"));
             await mx.SendMessageAsync(msg);
         }
 
         private static async Task SendMailWithAttachment_Test() {
-            var mx = new SendGridMailerService(_apiKey);
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@rider.cz", "Example Sender"),
+            var mx = new SendGridMailerService(apiKey);
+            var msg = new MailMessage {
+                From = new MailAddress("sender@rider.cz", "Example Sender"),
                 Subject = "Žluťoučký kůň úpěl ďábelské ódy - subject",
-                BodyText = "Žluťoučký kůň úpěl ďábelské ódy - text.",
-                BodyHtml = "<html><body><p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p></body></html>"
+                Body = "Žluťoučký kůň úpěl ďábelské ódy - text."
             };
-            msg.To.Add(new MailAddressDto("ponyboy@email.cz", "Example Recipient"));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString("<html><body><p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p></body></html>", Encoding.UTF8, "text/html"));
+            msg.To.Add(new MailAddress("ponyboy@email.cz", "Example Recipient"));
 
-            using (var ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("Test attachment file"))) {
-                msg.Attachments.Add(new AttachmentDto { Name = "attachment.txt", MimeType = "text/plain", Stream = ms });
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes("Test attachment file"))) {
+                msg.Attachments.Add(new Attachment(ms, "attachment.txt", "text/plain"));
                 await mx.SendMessageAsync(msg);
             }
         }
@@ -91,20 +94,20 @@ namespace Altairis.Services.Mailing.SendGrid.IntegrationTests {
                 BodyHtmlFormat = "<html><body>{0}<hr/>This is footer</body></html>",
                 BodyTextFormat = "{0}\r\n--\r\nThis is footer",
                 SubjectFormat = "[test] {0}",
-                DefaultFrom = new MailAddressDto("from@rider.cz", "Example From"),
-                ApiKey = _apiKey
+                DefaultFrom = new MailAddress("from@rider.cz", "Example From"),
+                ApiKey = apiKey
             };
 
             var mx = new SendGridMailerService(options);
-            var msg = new MailMessageDto {
+            var msg = new MailMessage {
                 Subject = "Žluťoučký kůň úpěl ďábelské ódy - subject",
-                BodyText = "Žluťoučký kůň úpěl ďábelské ódy - text.",
-                BodyHtml = "<p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p>"
+                Body = "Žluťoučký kůň úpěl ďábelské ódy - text."
             };
-            msg.To.Add(new MailAddressDto("ponyboy@email.cz", "Example Recipient"));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString("<p>Žluťoučký kůň úpěl ďábelské ódy <b>v HTML</b>.</p>", Encoding.UTF8, "text/html"));
+            msg.To.Add(new MailAddress("ponyboy@email.cz", "Example Recipient"));
 
-            using (var ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("Test attachment file"))) {
-                msg.Attachments.Add(new AttachmentDto { Name = "attachment.txt", MimeType = "text/plain", Stream = ms });
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes("Test attachment file"))) {
+                msg.Attachments.Add(new Attachment(ms, "attachment.txt", "text/plain"));
                 await mx.SendMessageAsync(msg);
             }
         }

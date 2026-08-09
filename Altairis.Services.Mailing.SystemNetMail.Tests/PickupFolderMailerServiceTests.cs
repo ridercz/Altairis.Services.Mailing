@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -10,12 +12,12 @@ namespace Altairis.Services.Mailing.SystemNetMail.Tests {
         [Fact]
         public async Task SendPlainTextMail_Test() {
             var mx = new PickupFolderMailerService(CreateTempFolder("plain"));
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@example.com", "Example Sender"),
-                Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
-                BodyText = "luouèkı kùò úpìl ïábelské ódy - text."
+            var msg = new MailMessage {
+                From = new MailAddress("sender@example.com", "Example Sender"),
+                Subject = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - subject",
+                Body = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - text."
             };
-            msg.To.Add(new MailAddressDto("recipient@example.com", "Example Recipient"));
+            msg.To.Add(new MailAddress("recipient@example.com", "Example Recipient"));
             await mx.SendMessageAsync(msg);
 
             Assert.True(EmlFileExists(mx.PickupFolderName));
@@ -24,12 +26,13 @@ namespace Altairis.Services.Mailing.SystemNetMail.Tests {
         [Fact]
         public async Task SendHtmlMail_Test() {
             var mx = new PickupFolderMailerService(CreateTempFolder("html"));
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@example.com", "Example Sender"),
-                Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
-                BodyHtml = "<html><body><p>luouèkı kùò úpìl ïábelské ódy <b>v HTML</b>.</p></body></html>"
+            var msg = new MailMessage {
+                From = new MailAddress("sender@example.com", "Example Sender"),
+                Subject = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - subject",
+                Body = "<html><body><p>ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy <b>v HTML</b>.</p></body></html>",
+                IsBodyHtml = true
             };
-            msg.To.Add(new MailAddressDto("recipient@example.com", "Example Recipient"));
+            msg.To.Add(new MailAddress("recipient@example.com", "Example Recipient"));
             await mx.SendMessageAsync(msg);
 
             Assert.True(EmlFileExists(mx.PickupFolderName));
@@ -38,13 +41,13 @@ namespace Altairis.Services.Mailing.SystemNetMail.Tests {
         [Fact]
         public async Task SendAlternateMail_Test() {
             var mx = new PickupFolderMailerService(CreateTempFolder("alternate"));
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@example.com", "Example Sender"),
-                Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
-                BodyText = "luouèkı kùò úpìl ïábelské ódy - text.",
-                BodyHtml = "<html><body><p>luouèkı kùò úpìl ïábelské ódy <b>v HTML</b>.</p></body></html>"
+            var msg = new MailMessage {
+                From = new MailAddress("sender@example.com", "Example Sender"),
+                Subject = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - subject",
+                Body = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - text."
             };
-            msg.To.Add(new MailAddressDto("recipient@example.com", "Example Recipient"));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString("<html><body><p>ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy <b>v HTML</b>.</p></body></html>", Encoding.UTF8, "text/html"));
+            msg.To.Add(new MailAddress("recipient@example.com", "Example Recipient"));
             await mx.SendMessageAsync(msg);
 
             Assert.True(EmlFileExists(mx.PickupFolderName));
@@ -53,16 +56,16 @@ namespace Altairis.Services.Mailing.SystemNetMail.Tests {
         [Fact]
         public async Task SendMailWithAttachment_Test() {
             var mx = new PickupFolderMailerService(CreateTempFolder("attachment"));
-            var msg = new MailMessageDto {
-                From = new MailAddressDto("sender@example.com", "Example Sender"),
-                Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
-                BodyText = "luouèkı kùò úpìl ïábelské ódy - text.",
-                BodyHtml = "<html><body><p>luouèkı kùò úpìl ïábelské ódy <b>v HTML</b>.</p></body></html>"
+            var msg = new MailMessage {
+                From = new MailAddress("sender@example.com", "Example Sender"),
+                Subject = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - subject",
+                Body = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - text."
             };
-            msg.To.Add(new MailAddressDto("recipient@example.com", "Example Recipient"));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString("<html><body><p>ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy <b>v HTML</b>.</p></body></html>", Encoding.UTF8, "text/html"));
+            msg.To.Add(new MailAddress("recipient@example.com", "Example Recipient"));
 
-            using (var ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("Test attachment file"))) {
-                msg.Attachments.Add(new AttachmentDto { Name = "attachment.txt", MimeType = "text/plain", Stream = ms });
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes("Test attachment file"))) {
+                msg.Attachments.Add(new Attachment(ms, "attachment.txt", "text/plain"));
                 await mx.SendMessageAsync(msg);
             }
 
@@ -75,21 +78,21 @@ namespace Altairis.Services.Mailing.SystemNetMail.Tests {
                 BodyHtmlFormat = "<html><body>{0}<hr/>This is footer</body></html>",
                 BodyTextFormat = "{0}\r\n--\r\nThis is footer",
                 SubjectFormat = "[test] {0}",
-                DefaultFrom = new MailAddressDto("from@example.com", "Example From"),
-                DefaultSender = new MailAddressDto("sender@example.com", "Example Sender"),
+                DefaultFrom = new MailAddress("from@example.com", "Example From"),
+                DefaultSender = new MailAddress("sender@example.com", "Example Sender"),
                 PickupFolderName = CreateTempFolder("options")
             };
 
             var mx = new PickupFolderMailerService(options);
-            var msg = new MailMessageDto {
-                Subject = "luouèkı kùò úpìl ïábelské ódy - subject",
-                BodyText = "luouèkı kùò úpìl ïábelské ódy - text.",
-                BodyHtml = "<p>luouèkı kùò úpìl ïábelské ódy <b>v HTML</b>.</p>"
+            var msg = new MailMessage {
+                Subject = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - subject",
+                Body = "ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy - text."
             };
-            msg.To.Add(new MailAddressDto("recipient@example.com", "Example Recipient"));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString("<p>ï¿½luï¿½ouï¿½kï¿½ kï¿½ï¿½ ï¿½pï¿½l ï¿½ï¿½belskï¿½ ï¿½dy <b>v HTML</b>.</p>", Encoding.UTF8, "text/html"));
+            msg.To.Add(new MailAddress("recipient@example.com", "Example Recipient"));
 
-            using (var ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("Test attachment file"))) {
-                msg.Attachments.Add(new AttachmentDto { Name = "attachment.txt", MimeType = "text/plain", Stream = ms });
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes("Test attachment file"))) {
+                msg.Attachments.Add(new Attachment(ms, "attachment.txt", "text/plain"));
                 await mx.SendMessageAsync(msg);
             }
 

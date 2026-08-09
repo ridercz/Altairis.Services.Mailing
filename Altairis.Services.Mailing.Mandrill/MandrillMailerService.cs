@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Mandrill;
 using Mandrill.Model;
@@ -25,7 +26,7 @@ namespace Altairis.Services.Mailing.Mandrill {
         public string TrackingDomain { get; }
 
 
-        protected override async Task SendMessageAsyncInternal(MailMessageDto message) {
+        protected override async Task SendMessageAsyncInternal(MailMessage message) {
             if (message == null) throw new ArgumentNullException(nameof(message));
 
             var msg = message.ToMandrillMessage();

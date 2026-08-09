@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing.Templating {
@@ -10,7 +12,7 @@ namespace Altairis.Services.Mailing.Templating {
             this.mailerService = mailerService;
         }
 
-        protected MailMessageDto ExpandTemplatedMessage(TemplatedMailMessageDto templateMessage, object values, string subjectTemplate, string bodyTextTemplate = null, string bodyHtmlTemplate = null, CultureInfo culture = null) {
+        protected MailMessage ExpandTemplatedMessage(TemplatedMailMessageDto templateMessage, object values, string subjectTemplate, string bodyTextTemplate = null, string bodyHtmlTemplate = null, CultureInfo culture = null) {
             if (templateMessage == null) throw new ArgumentNullException(nameof(templateMessage));
             if (values == null) throw new ArgumentNullException(nameof(values));
             if (subjectTemplate == null) throw new ArgumentNullException(nameof(subjectTemplate));
@@ -18,19 +20,45 @@ namespace Altairis.Services.Mailing.Templating {
             if (string.IsNullOrWhiteSpace(bodyTextTemplate) && string.IsNullOrWhiteSpace(bodyHtmlTemplate)) throw new ArgumentException($"At least one of {nameof(bodyTextTemplate)} and {nameof(bodyHtmlTemplate)} must be non-empty string.");
 
             var r = new TemplateReplacer(values, culture ?? CultureInfo.CurrentCulture);
-            var newMessage = new MailMessageDto {
+            var bodyText = r.ReplacePlaceholders(bodyTextTemplate);
+            var bodyHtml = r.ReplacePlaceholders(bodyHtmlTemplate);
+            var newMessage = new MailMessage {
                 Subject = r.ReplacePlaceholders(subjectTemplate),
-                BodyText = r.ReplacePlaceholders(bodyTextTemplate),
-                BodyHtml = r.ReplacePlaceholders(bodyHtmlTemplate),
-                Attachments = templateMessage.Attachments,
-                Bcc = templateMessage.Bcc,
-                Cc = templateMessage.Cc,
-                CustomHeaders = templateMessage.CustomHeaders,
                 From = templateMessage.From,
-                Sender = templateMessage.Sender,
-                ReplyTo = templateMessage.ReplyTo,
-                To = templateMessage.To
+                Sender = templateMessage.Sender
             };
+            foreach (var item in templateMessage.To) {
+                newMessage.To.Add(item);
+            }
+            foreach (var item in templateMessage.Cc) {
+                newMessage.CC.Add(item);
+            }
+            foreach (var item in templateMessage.Bcc) {
+                newMessage.Bcc.Add(item);
+            }
+            foreach (var item in templateMessage.ReplyTo) {
+                newMessage.ReplyToList.Add(item);
+            }
+            foreach (var item in templateMessage.CustomHeaders) {
+                newMessage.Headers.Add(item.Key, item.Value);
+            }
+            foreach (var item in templateMessage.Attachments) {
+                newMessage.Attachments.Add(item);
+            }
+            if (!string.IsNullOrWhiteSpace(bodyText) && !string.IsNullOrWhiteSpace(bodyHtml)) {
+                newMessage.Body = string.Empty;
+                newMessage.IsBodyHtml = false;
+                newMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(bodyText, Encoding.UTF8, "text/plain"));
+                newMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(bodyHtml, Encoding.UTF8, "text/html"));
+            }
+            else if (!string.IsNullOrWhiteSpace(bodyHtml)) {
+                newMessage.Body = bodyHtml;
+                newMessage.IsBodyHtml = true;
+            }
+            else {
+                newMessage.Body = bodyText;
+                newMessage.IsBodyHtml = false;
+            }
             return newMessage;
         }
 

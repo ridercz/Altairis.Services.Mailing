@@ -1,9 +1,11 @@
-﻿namespace Altairis.Services.Mailing {
+﻿using System.Net.Mail;
+
+namespace Altairis.Services.Mailing {
     public class MailerServiceOptions {
 
-        public MailAddressDto DefaultFrom { get; set; }
+        public MailAddress DefaultFrom { get; set; }
 
-        public MailAddressDto DefaultSender { get; set; }
+        public MailAddress DefaultSender { get; set; }
 
         public string BodyTextFormat { get; set; }
 

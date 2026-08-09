@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 
 namespace Altairis.Services.Mailing.Templating {
     public class TemplatedMailMessageDto {
 
-        public TemplatedMailMessageDto(string templateName, string recipientAddress) : this(templateName, new MailAddressDto(recipientAddress)) { }
+        public TemplatedMailMessageDto(string templateName, string recipientAddress) : this(templateName, new MailAddress(recipientAddress)) { }
 
-        public TemplatedMailMessageDto(string templateName, MailAddressDto recipient = null) {
+        public TemplatedMailMessageDto(string templateName, MailAddress recipient = null) {
             if (templateName == null) throw new ArgumentNullException(nameof(templateName));
             if (string.IsNullOrWhiteSpace(templateName)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(templateName));
 
@@ -14,21 +15,21 @@ namespace Altairis.Services.Mailing.Templating {
             if (recipient != null) this.To.Add(recipient);
         }
 
-        public MailAddressDto From { get; set; }
+        public MailAddress From { get; set; }
 
-        public MailAddressDto Sender { get; set; }
+        public MailAddress Sender { get; set; }
 
-        public IList<MailAddressDto> To { get; set; } = new List<MailAddressDto>();
+        public IList<MailAddress> To { get; set; } = new List<MailAddress>();
 
-        public IList<MailAddressDto> Cc { get; set; } = new List<MailAddressDto>();
+        public IList<MailAddress> Cc { get; set; } = new List<MailAddress>();
 
-        public IList<MailAddressDto> Bcc { get; set; } = new List<MailAddressDto>();
+        public IList<MailAddress> Bcc { get; set; } = new List<MailAddress>();
 
-        public IList<MailAddressDto> ReplyTo { get; set; } = new List<MailAddressDto>();
+        public IList<MailAddress> ReplyTo { get; set; } = new List<MailAddress>();
 
         public IList<KeyValuePair<string, string>> CustomHeaders { get; set; } = new List<KeyValuePair<string, string>>();
 
-        public IList<AttachmentDto> Attachments { get; set; } = new List<AttachmentDto>();
+        public IList<Attachment> Attachments { get; set; } = new List<Attachment>();
 
         public string TemplateName { get; set; }
 

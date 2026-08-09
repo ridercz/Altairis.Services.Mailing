@@ -1,4 +1,5 @@
 ﻿using Altairis.Services.Mailing.Templating;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Altairis.Services.Mailing {
     public static class AltairisServicesMailingTemplatingRegistrationExtensions {

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing.Rfc2822 {
     public class PickupFolderMailerService : MailerServiceBase {
@@ -25,7 +26,7 @@ namespace Altairis.Services.Mailing.Rfc2822 {
                 TempFileNameFactory = tempFileNameFactory
             }) { }
 
-        protected override async Task SendMessageAsyncInternal(MailMessageDto message) {
+        protected override async Task SendMessageAsyncInternal(MailMessage message) {
             if (message == null) throw new ArgumentNullException(nameof(message));
 
             // Convert to message
@@ -39,7 +40,7 @@ namespace Altairis.Services.Mailing.Rfc2822 {
 
                 // Write envelope receivers
                 var receivers = message.To
-                    .Union(message.Cc)
+                    .Union(message.CC)
                     .Union(message.Bcc);
                 foreach (var item in receivers.Select(x => x.Address)) {
                     await sw.WriteLineAsync($"X-Receiver: <{item}>");

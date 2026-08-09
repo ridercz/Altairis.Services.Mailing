@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing {
     public interface IMailerService {
 
-        Task SendMessageAsync(MailMessageDto message);
+        Task SendMessageAsync(MailMessage message);
 
     }
 }

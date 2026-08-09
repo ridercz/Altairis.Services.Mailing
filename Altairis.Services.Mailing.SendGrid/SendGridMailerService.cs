@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using SendGrid;
 
@@ -16,7 +17,7 @@ namespace Altairis.Services.Mailing.SendGrid {
                 ApiKey = apiKey
             }) { }
 
-        protected override async Task SendMessageAsyncInternal(MailMessageDto message) {
+        protected override async Task SendMessageAsyncInternal(MailMessage message) {
             if (message == null) throw new ArgumentNullException(nameof(message));
 
             // Convert to message

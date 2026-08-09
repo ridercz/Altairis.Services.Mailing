@@ -1,56 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using Altairis.Services.Mailing;
 using SendGrid.Helpers.Mail;
 
 namespace Altairis.Services.Mailing.SendGrid {
     internal static class Extensions {
 
-        public static SendGridMessage ToSendGridMessage(this MailMessageDto dto) {
-            if (dto.Sender != null) throw new NotSupportedException("Sender header is not supported by SendGrid.");
-            if ((dto.ReplyTo?.Count ?? 0) > 1) throw new NotSupportedException("Only one Reply-To header is supported by SendGrid.");
+        public static SendGridMessage ToSendGridMessage(this MailMessage message) {
+            if (message.Sender != null) throw new NotSupportedException("Sender header is not supported by SendGrid.");
+            if (message.ReplyToList.Count > 1) throw new NotSupportedException("Only one Reply-To header is supported by SendGrid.");
 
             var msg = new SendGridMessage();
 
             // Add standard header fields
-            msg.From = dto.From.ToEmailAddress();
-            if (dto.To.Any()) msg.AddTos(dto.To.ToEmailAddress());
-            if (dto.Cc.Any()) msg.AddCcs(dto.Cc.ToEmailAddress());
-            if (dto.Bcc.Any()) msg.AddBccs(dto.Bcc.ToEmailAddress());
-            msg.ReplyTo = dto.ReplyTo.FirstOrDefault().ToEmailAddress();
-            msg.Subject = dto.Subject;
+            msg.From = message.From.ToEmailAddress();
+            if (message.To.Any()) msg.AddTos(message.To.ToEmailAddress());
+            if (message.CC.Any()) msg.AddCcs(message.CC.ToEmailAddress());
+            if (message.Bcc.Any()) msg.AddBccs(message.Bcc.ToEmailAddress());
+            msg.ReplyTo = message.ReplyToList.Cast<MailAddress>().FirstOrDefault().ToEmailAddress();
+            msg.Subject = message.Subject;
 
             // Add custom header fields
-            foreach (var item in dto.CustomHeaders) {
-                msg.Headers.Add(item.Key, item.Value);
+            foreach (var item in message.Headers.AllKeys) {
+                msg.Headers.Add(item, message.Headers[item]);
             }
 
             // Construct body
-            if (!string.IsNullOrWhiteSpace(dto.BodyText)) msg.PlainTextContent = dto.BodyText;
-            if (!string.IsNullOrWhiteSpace(dto.BodyHtml)) msg.HtmlContent = dto.BodyHtml;
+            message.GetBodyParts(out var bodyText, out var bodyHtml);
+            if (!string.IsNullOrWhiteSpace(bodyText)) msg.PlainTextContent = bodyText;
+            if (!string.IsNullOrWhiteSpace(bodyHtml)) msg.HtmlContent = bodyHtml;
 
             // Add attachments
-            foreach (var item in dto.Attachments) {
-                // Get stream as byte array
-                var data = new byte[item.Stream.Length];
-                item.Stream.Read(data, 0, (int)item.Stream.Length);
-
-                // Base64 encode
-                var encodedData = Convert.ToBase64String(data, 0, data.Length);
-                msg.AddAttachment(item.Name, encodedData, item.MimeType);
+            foreach (var item in message.Attachments) {
+                if (item.ContentStream.CanSeek) item.ContentStream.Position = 0;
+                using (var ms = new MemoryStream()) {
+                    item.ContentStream.CopyTo(ms);
+                    var encodedData = Convert.ToBase64String(ms.ToArray());
+                    msg.AddAttachment(item.Name, encodedData, item.ContentType?.MediaType);
+                }
             }
 
             return msg;
         }
 
-        public static List<EmailAddress> ToEmailAddress(this IEnumerable<MailAddressDto> dto) {
-            return dto.Select(x => ToEmailAddress((MailAddressDto)x)).ToList();
+        public static List<EmailAddress> ToEmailAddress(this IEnumerable<MailAddress> addresses) {
+            return addresses.Select(ToEmailAddress).ToList();
         }
 
-        public static EmailAddress ToEmailAddress(this MailAddressDto dto) {
-            if (dto == null) return null;
-            return new EmailAddress(dto.Address, dto.DisplayName);
+        public static EmailAddress ToEmailAddress(this MailAddress address) {
+            if (address == null) return null;
+            return new EmailAddress(address.Address, address.DisplayName);
         }
+
 
     }
 }

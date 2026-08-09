@@ -1,4 +1,5 @@
 ﻿using Altairis.Services.Mailing.Rfc2822;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Altairis.Services.Mailing {
