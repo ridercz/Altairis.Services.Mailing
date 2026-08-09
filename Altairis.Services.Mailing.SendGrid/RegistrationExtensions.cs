@@ -2,7 +2,7 @@
 using Altairis.Services.Mailing.SendGrid;
 using System;
 
-namespace Microsoft.Extensions.DependencyInjection {
+namespace Altairis.Services.Mailing {
     public static class AltairisServicesMailingSendGridRegistrationExtensions {
 
         public static IServiceCollection AddSendGridMailerService(this IServiceCollection services, SendGridMailerServiceOptions options) {
