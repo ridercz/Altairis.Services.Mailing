@@ -3,36 +3,35 @@ using System.IO;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace Altairis.Services.Mailing.SystemNetMail {
-    public class PickupFolderMailerService : MailerServiceBase {
+namespace Altairis.Services.Mailing.SystemNetMail;
 
-        public string PickupFolderName { get; }
+public class PickupFolderMailerService : MailerServiceBase {
 
-        public PickupFolderMailerService(PickupFolderMailerServiceOptions options) : base(options) {
-            if (options.PickupFolderName == null) throw new ArgumentException("Pickup folder name cannot be null.", nameof(options));
-            if (string.IsNullOrWhiteSpace(options.PickupFolderName)) throw new ArgumentException("Pickup folder name cannot be empty or whitespace only string.", nameof(options));
-            if (!Directory.Exists(options.PickupFolderName)) throw new DirectoryNotFoundException();
+    public string PickupFolderName { get; }
 
-            this.PickupFolderName = options.PickupFolderName;
-        }
+    public PickupFolderMailerService(PickupFolderMailerServiceOptions options) : base(options) {
+        if (options.PickupFolderName == null) throw new ArgumentException("Pickup folder name cannot be null.", nameof(options));
+        if (string.IsNullOrWhiteSpace(options.PickupFolderName)) throw new ArgumentException("Pickup folder name cannot be empty or whitespace only string.", nameof(options));
+        if (!Directory.Exists(options.PickupFolderName)) throw new DirectoryNotFoundException();
 
-        public PickupFolderMailerService(string pickupFolderName)
-            : this(new PickupFolderMailerServiceOptions {
-                PickupFolderName = pickupFolderName,
-            }) { }
+        this.PickupFolderName = options.PickupFolderName;
+    }
 
-        protected override async Task SendMessageAsyncInternal(MailMessage message) {
-            if (message == null) throw new ArgumentNullException(nameof(message));
+    public PickupFolderMailerService(string pickupFolderName)
+        : this(new PickupFolderMailerServiceOptions {
+            PickupFolderName = pickupFolderName,
+        }) { }
 
-            // Send using pickup folder
-            using (var mx = new SmtpClient {
-                DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
-                PickupDirectoryLocation = this.PickupFolderName,
-            }) {
-                await mx.SendMailAsync(message);
-            }
+    protected override async Task SendMessageAsyncInternal(MailMessage message) {
+        ArgumentNullException.ThrowIfNull(message);
 
-        }
+        // Send using pickup folder
+        using var mx = new SmtpClient {
+            DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+            PickupDirectoryLocation = this.PickupFolderName,
+        };
+        await mx.SendMailAsync(message);
 
     }
+
 }

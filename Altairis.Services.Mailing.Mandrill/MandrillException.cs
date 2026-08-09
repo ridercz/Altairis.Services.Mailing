@@ -1,22 +1,22 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Mandrill.Model;
 
-namespace Altairis.Services.Mailing.Mandrill {
-    public class MandrillException : Exception {
-        private static string DEFAULT_MESSAGE = "Delivery to at least one recipient was not successfull.";
+namespace Altairis.Services.Mailing.Mandrill;
 
-        public MandrillException() : base(DEFAULT_MESSAGE) { }
+public class MandrillException : Exception {
+    private static readonly string DEFAULT_MESSAGE = "Delivery to at least one recipient was not successfull.";
 
-        public MandrillException(IEnumerable<MandrillSendMessageResponse> results) : base(DEFAULT_MESSAGE) {
-            this.Results = results;
-        }
+    public MandrillException() : base(DEFAULT_MESSAGE) { }
 
-        public MandrillException(string message) : base(message) { }
-
-        public MandrillException(string message, Exception innerException) : base(message, innerException) { }
-
-        public IEnumerable<MandrillSendMessageResponse> Results { get; }
-
+    public MandrillException(IEnumerable<MandrillSendMessageResponse> results) : base(DEFAULT_MESSAGE) {
+        this.Results = results;
     }
+
+    public MandrillException(string message) : base(message) { }
+
+    public MandrillException(string message, Exception innerException) : base(message, innerException) { }
+
+    public IEnumerable<MandrillSendMessageResponse> Results { get; }
+
 }

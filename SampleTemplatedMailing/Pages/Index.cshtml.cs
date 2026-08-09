@@ -3,31 +3,22 @@ using Altairis.Services.Mailing.Templating;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SampleTemplatedMailing.Pages {
-    public class IndexModel : PageModel {
-        private readonly ITemplatedMailerService mailer;
+namespace SampleTemplatedMailing.Pages;
 
-        public IndexModel(ITemplatedMailerService mailer) {
-            this.mailer = mailer;
-        }
+public class IndexModel(ITemplatedMailerService mailer) : PageModel {
+    public async Task<IActionResult> OnPost() {
+        // Prepare templated message
+        var msg = new TemplatedMailMessageDto("Test", "to@example.com");
 
-        public void OnGet() {
-        }
+        // Send message with values
+        await mailer.SendMessageAsync(msg, new {
+            MyValue1 = 123,
+            MyValue2 = "TEST",
+            NullValue = (string)null
+        });
 
-        public async Task<IActionResult> OnPost() {
-            // Prepare templated message
-            var msg = new TemplatedMailMessageDto("Test", "to@example.com");
-
-            // Send message with values
-            await this.mailer.SendMessageAsync(msg, new {
-                MyValue1 = 123,
-                MyValue2 = "TEST",
-                NullValue = (string)null
-            });
-
-            // Redirect
-            return this.RedirectToPage("Sent");
-        }
-
+        // Redirect
+        return this.RedirectToPage("Sent");
     }
+
 }

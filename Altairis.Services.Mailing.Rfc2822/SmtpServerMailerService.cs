@@ -1,48 +1,37 @@
-﻿using System;
+using System;
 using System.Net.Mail;
 using System.Net.Security;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
 using MailKit.Security;
 
-namespace Altairis.Services.Mailing.Rfc2822 {
-    public class SmtpServerMailerService : MailerServiceBase {
+namespace Altairis.Services.Mailing.Rfc2822;
 
-        public string HostName { get; }
+public class SmtpServerMailerService(SmtpServerMailerServiceOptions options) : MailerServiceBase(options) {
+    
+    public string HostName { get; } = options.HostName;
 
-        public int Port { get; }
+    public int Port { get; } = options.Port;
 
-        public string UserName { get; }
+    public string UserName { get; } = options.UserName;
 
-        public string Password { get; }
+    public string Password { get; } = options.Password;
 
-        public bool AllowSsl { get; }
+    public bool AllowSsl { get; } = options.AllowSsl;
 
-        public RemoteCertificateValidationCallback ServerCertificateValidationCallback { get; }
+    public RemoteCertificateValidationCallback ServerCertificateValidationCallback { get; } = options.ServerCertificateValidationCallback;
 
-        public SmtpServerMailerService(SmtpServerMailerServiceOptions options) : base(options) {
-            this.HostName = options.HostName;
-            this.Port = options.Port;
-            this.UserName = options.UserName;
-            this.Password = options.Password;
-            this.AllowSsl = options.AllowSsl;
-            this.ServerCertificateValidationCallback = options.ServerCertificateValidationCallback;
-        }
+    protected override async Task SendMessageAsyncInternal(MailMessage message) {
+        ArgumentNullException.ThrowIfNull(message);
 
-        protected override async Task SendMessageAsyncInternal(MailMessage message) {
-            if (message == null) throw new ArgumentNullException(nameof(message));
+        // Get MIME message
+        var msg = message.ToMimeMessage();
 
-            // Get MIME message
-            var msg = message.ToMimeMessage();
-
-            // Send message
-            using (var mx = new MailKit.Net.Smtp.SmtpClient()) {
-                await mx.ConnectAsync(this.HostName, this.Port, AllowSsl ? SecureSocketOptions.Auto : SecureSocketOptions.None);
-                if (this.AllowSsl) mx.ServerCertificateValidationCallback = this.ServerCertificateValidationCallback;
-                if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password)) await mx.AuthenticateAsync(this.UserName, this.Password);
-                await mx.SendAsync(msg);
-                await mx.DisconnectAsync(true);
-            }
-        }
+        // Send message
+        using var mx = new MailKit.Net.Smtp.SmtpClient();
+        await mx.ConnectAsync(this.HostName, this.Port, AllowSsl ? SecureSocketOptions.Auto : SecureSocketOptions.None);
+        if (this.AllowSsl) mx.ServerCertificateValidationCallback = this.ServerCertificateValidationCallback;
+        if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password)) await mx.AuthenticateAsync(this.UserName, this.Password);
+        await mx.SendAsync(msg);
+        await mx.DisconnectAsync(true);
     }
 }

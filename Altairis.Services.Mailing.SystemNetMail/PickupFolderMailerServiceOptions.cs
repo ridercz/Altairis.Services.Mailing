@@ -1,8 +1,8 @@
-﻿namespace Altairis.Services.Mailing.SystemNetMail {
-    public class PickupFolderMailerServiceOptions : MailerServiceOptions {
+namespace Altairis.Services.Mailing.SystemNetMail;
 
-        public string PickupFolderName { get; set; }
+public class PickupFolderMailerServiceOptions : MailerServiceOptions {
+
+    public string PickupFolderName { get; set; }
 
 
-    }
 }

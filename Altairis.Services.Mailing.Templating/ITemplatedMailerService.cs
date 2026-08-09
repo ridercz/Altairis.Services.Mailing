@@ -1,12 +1,12 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Threading.Tasks;
 
-namespace Altairis.Services.Mailing.Templating {
-    public interface ITemplatedMailerService {
+namespace Altairis.Services.Mailing.Templating;
 
-        Task SendMessageAsync(TemplatedMailMessageDto message, object values);
+public interface ITemplatedMailerService {
 
-        Task SendMessageAsync(TemplatedMailMessageDto message, object values, CultureInfo culture, CultureInfo uiCulture);
+    Task SendMessageAsync(TemplatedMailMessageDto message, object values);
 
-    }
+    Task SendMessageAsync(TemplatedMailMessageDto message, object values, CultureInfo culture, CultureInfo uiCulture);
+
 }

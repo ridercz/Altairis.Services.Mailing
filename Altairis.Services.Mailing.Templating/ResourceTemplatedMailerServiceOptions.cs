@@ -1,19 +1,19 @@
-﻿using System;
+using System;
 
-namespace Altairis.Services.Mailing.Templating {
-    public class ResourceTemplatedMailerServiceOptions {
-        public Type ResourceType { get; set; }
+namespace Altairis.Services.Mailing.Templating;
 
-        public string SubjectKeyFormatString { get; set; } = "{0}_Subject";
+public class ResourceTemplatedMailerServiceOptions {
+    public Type ResourceType { get; set; }
 
-        public string BodyTextKeyFormatString { get; set; } = "{0}_Text";
+    public string SubjectKeyFormatString { get; set; } = "{0}_Subject";
 
-        public string BodyHtmlKeyFormatString { get; set; } = "{0}_Html";
+    public string BodyTextKeyFormatString { get; set; } = "{0}_Text";
 
-        public string SubjectFormatStringKeyName { get; set; } = "SubjectFormatString";
+    public string BodyHtmlKeyFormatString { get; set; } = "{0}_Html";
 
-        public string BodyTextFormatStringKeyName { get; set; } = "BodyTextFormatString";
+    public string SubjectFormatStringKeyName { get; set; } = "SubjectFormatString";
 
-        public string BodyHtmlFormatStringKeyName { get; set; } = "BodyHtmlFormatString";
-    }
+    public string BodyTextFormatStringKeyName { get; set; } = "BodyTextFormatString";
+
+    public string BodyHtmlFormatStringKeyName { get; set; } = "BodyHtmlFormatString";
 }

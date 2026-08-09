@@ -1,35 +1,30 @@
-﻿using System;
+using System;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using SendGrid;
 
-namespace Altairis.Services.Mailing.SendGrid {
-    public class SendGridMailerService : MailerServiceBase {
+namespace Altairis.Services.Mailing.SendGrid;
 
-        public string ApiKey { get; set; }
+public class SendGridMailerService(SendGridMailerServiceOptions options) : MailerServiceBase(options) {
+    public string ApiKey { get; set; } = options.ApiKey;
 
-        public SendGridMailerService(SendGridMailerServiceOptions options) : base(options) {
-            this.ApiKey = options.ApiKey;
+    public SendGridMailerService(string apiKey)
+        : this(new SendGridMailerServiceOptions {
+            ApiKey = apiKey
+        }) { }
+
+    protected override async Task SendMessageAsyncInternal(MailMessage message) {
+        ArgumentNullException.ThrowIfNull(message);
+
+        // Convert to message
+        var msg = message.ToSendGridMessage();
+
+        // Send message
+        var mx = new SendGridClient(this.ApiKey);
+        var response = await mx.SendEmailAsync(msg);
+        if (response.StatusCode != System.Net.HttpStatusCode.Accepted) {
+            throw new SendGridException($"SendGrid returned HTTP Status code {response.StatusCode}.", response);
         }
-
-        public SendGridMailerService(string apiKey)
-            : this(new SendGridMailerServiceOptions {
-                ApiKey = apiKey
-            }) { }
-
-        protected override async Task SendMessageAsyncInternal(MailMessage message) {
-            if (message == null) throw new ArgumentNullException(nameof(message));
-
-            // Convert to message
-            var msg = message.ToSendGridMessage();
-
-            // Send message
-            var mx = new SendGridClient(this.ApiKey);
-            var response = await mx.SendEmailAsync(msg);
-            if (response.StatusCode != System.Net.HttpStatusCode.Accepted) {
-                throw new SendGridException($"SendGrid returned HTTP Status code {response.StatusCode}.",response);
-            }
-        }
-
     }
+
 }

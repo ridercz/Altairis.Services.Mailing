@@ -1,16 +1,14 @@
-﻿using Altairis.Services.Mailing.Templating;
+using Altairis.Services.Mailing.Templating;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Altairis.Services.Mailing {
-    public static class AltairisServicesMailingTemplatingRegistrationExtensions {
+namespace Altairis.Services.Mailing;
 
-        public static IServiceCollection AddResourceTemplatedMailerService(this IServiceCollection services, ResourceTemplatedMailerServiceOptions options) {
-            services.AddSingleton(options);
-            services.AddSingleton(typeof(ITemplatedMailerService), typeof(ResourceTemplatedMailerService));
-            return services;
-        }
+public static class AltairisServicesMailingTemplatingRegistrationExtensions {
 
-
-
+    public static IServiceCollection AddResourceTemplatedMailerService(this IServiceCollection services, ResourceTemplatedMailerServiceOptions options) {
+        services.AddSingleton(options);
+        services.AddSingleton(typeof(ITemplatedMailerService), typeof(ResourceTemplatedMailerService));
+        return services;
     }
+
 }

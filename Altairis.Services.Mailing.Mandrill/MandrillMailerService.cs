@@ -1,45 +1,36 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Mandrill;
 using Mandrill.Model;
 
-namespace Altairis.Services.Mailing.Mandrill {
-    public class MandrillMailerService : MailerServiceBase {
+namespace Altairis.Services.Mailing.Mandrill;
 
-        public MandrillMailerService(string apiKey) : this(new MandrillMailerServiceOptions { ApiKey = apiKey }) { }
+public class MandrillMailerService(MandrillMailerServiceOptions options) : MailerServiceBase(options) {
+    public MandrillMailerService(string apiKey) : this(new MandrillMailerServiceOptions { ApiKey = apiKey }) { }
 
-        public MandrillMailerService(MandrillMailerServiceOptions options) : base(options) {
-            this.ApiKey = options.ApiKey;
-            this.TrackOpens = options.TrackOpens;
-            this.TrackClicks = options.TrackClicks;
-            this.TrackingDomain = options.TrackingDomain;
-        }
+    public string ApiKey { get; } = options.ApiKey;
 
-        public string ApiKey { get; }
+    public bool TrackOpens { get; } = options.TrackOpens;
 
-        public bool TrackOpens { get; }
+    public bool TrackClicks { get; } = options.TrackClicks;
 
-        public bool TrackClicks { get; }
-
-        public string TrackingDomain { get; }
+    public string TrackingDomain { get; } = options.TrackingDomain;
 
 
-        protected override async Task SendMessageAsyncInternal(MailMessage message) {
-            if (message == null) throw new ArgumentNullException(nameof(message));
+    protected override async Task SendMessageAsyncInternal(MailMessage message) {
+        ArgumentNullException.ThrowIfNull(message);
 
-            var msg = message.ToMandrillMessage();
-            msg.TrackOpens = this.TrackOpens;
-            msg.TrackClicks = this.TrackClicks;
-            msg.TrackingDomain = this.TrackingDomain;
+        var msg = message.ToMandrillMessage();
+        msg.TrackOpens = this.TrackOpens;
+        msg.TrackClicks = this.TrackClicks;
+        msg.TrackingDomain = this.TrackingDomain;
 
-            using (var api = new MandrillApi(this.ApiKey)) {
-                var mx = api.Messages;
-                var results = await mx.SendAsync(msg);
-                var isSuccess = results.All(x => x.Status == MandrillSendMessageResponseStatus.Sent || x.Status == MandrillSendMessageResponseStatus.Queued || x.Status == MandrillSendMessageResponseStatus.Scheduled);
-                if (!isSuccess) throw new MandrillException(results);
-            }
-        }
+        using var api = new MandrillApi(this.ApiKey);
+        var mx = api.Messages;
+        var results = await mx.SendAsync(msg);
+        var isSuccess = results.All(x => x.Status == MandrillSendMessageResponseStatus.Sent || x.Status == MandrillSendMessageResponseStatus.Queued || x.Status == MandrillSendMessageResponseStatus.Scheduled);
+        if (!isSuccess) throw new MandrillException(results);
     }
 }
