@@ -1,6 +1,4 @@
-﻿using Altairis.Services.Mailing;
-using Altairis.Services.Mailing.Templating;
-using System;
+﻿using Altairis.Services.Mailing.Templating;
 
 namespace Altairis.Services.Mailing {
     public static class AltairisServicesMailingTemplatingRegistrationExtensions {

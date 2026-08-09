@@ -1,5 +1,4 @@
-﻿using Altairis.Services.Mailing;
-using Altairis.Services.Mailing.Mandrill;
+﻿using Altairis.Services.Mailing.Mandrill;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

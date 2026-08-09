@@ -1,5 +1,4 @@
-﻿using Altairis.Services.Mailing;
-using Altairis.Services.Mailing.SystemNetMail;
+﻿using Altairis.Services.Mailing.SystemNetMail;
 using System;
 
 namespace Altairis.Services.Mailing {

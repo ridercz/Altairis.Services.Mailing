@@ -1,5 +1,4 @@
-﻿using Altairis.Services.Mailing;
-using Altairis.Services.Mailing.Rfc2822;
+﻿using Altairis.Services.Mailing.Rfc2822;
 using System;
 
 namespace Altairis.Services.Mailing {

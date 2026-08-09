@@ -1,5 +1,4 @@
-﻿using Altairis.Services.Mailing;
-using Altairis.Services.Mailing.SendGrid;
+﻿using Altairis.Services.Mailing.SendGrid;
 using System;
 
 namespace Altairis.Services.Mailing {
