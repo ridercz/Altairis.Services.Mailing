@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Altairis.Services.Mailing.Templating;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

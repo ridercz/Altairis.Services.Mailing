@@ -1,8 +1,6 @@
-using System;
 using System.Globalization;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing.Templating;
 

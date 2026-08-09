@@ -1,6 +1,5 @@
 using Altairis.Services.Mailing.Mandrill;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Altairis.Services.Mailing;
 

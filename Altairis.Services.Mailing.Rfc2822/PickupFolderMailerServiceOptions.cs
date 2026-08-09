@@ -1,5 +1,3 @@
-using System;
-
 namespace Altairis.Services.Mailing.Rfc2822;
 
 public class PickupFolderMailerServiceOptions : MailerServiceOptions {

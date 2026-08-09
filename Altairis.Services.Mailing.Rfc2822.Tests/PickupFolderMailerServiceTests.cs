@@ -1,9 +1,5 @@
-using System;
-using System.IO;
-using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Altairis.Services.Mailing.Rfc2822.Tests {

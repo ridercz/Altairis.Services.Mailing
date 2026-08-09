@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing.Templating;
 

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Mandrill.Model;
 
 namespace Altairis.Services.Mailing.Mandrill;

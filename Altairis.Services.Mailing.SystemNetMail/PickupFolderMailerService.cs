@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net.Mail;
-using System.Threading.Tasks;
+﻿using System.Net.Mail;
 
 namespace Altairis.Services.Mailing.SystemNetMail;
 

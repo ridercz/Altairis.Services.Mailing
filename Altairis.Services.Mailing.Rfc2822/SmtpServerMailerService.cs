@@ -1,7 +1,5 @@
-using System;
 using System.Net.Mail;
 using System.Net.Security;
-using System.Threading.Tasks;
 using MailKit.Security;
 
 namespace Altairis.Services.Mailing.Rfc2822;

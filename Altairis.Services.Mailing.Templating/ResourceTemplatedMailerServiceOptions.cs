@@ -1,5 +1,3 @@
-using System;
-
 namespace Altairis.Services.Mailing.Templating;
 
 public class ResourceTemplatedMailerServiceOptions {

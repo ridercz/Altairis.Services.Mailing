@@ -1,7 +1,5 @@
-using System;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Altairis.Services.Mailing;
 
