@@ -22,6 +22,6 @@ public class SendGridException : Exception {
         this.Response = response;
     }
 
-    public Response Response { get; }
+    public Response? Response { get; }
 
 }

@@ -4,7 +4,7 @@ using System.Text;
 namespace Altairis.Services.Mailing.SendGrid.IntegrationTests;
 
 class Program {
-    private static string apiKey;
+    private static string apiKey = string.Empty;
 
     static void Main(string[] args) {
         apiKey = args?[0] ?? throw new ArgumentException("API key missing from command line");
@@ -27,11 +27,13 @@ class Program {
 
             Console.WriteLine("OK");
         } catch (Exception e) when (e.GetBaseException() is SendGridException) {
-            var se = e.GetBaseException() as SendGridException;
+            var se = e.GetBaseException() as SendGridException ?? throw new InvalidOperationException("Unexpected exception type.");
             Console.WriteLine(se.Message);
-            Console.WriteLine(se.Response.Headers);
-            Console.WriteLine();
-            Console.WriteLine(se.Response.Body.ReadAsStringAsync().Result);
+            if (se.Response != null) {
+                Console.WriteLine(se.Response.Headers);
+                Console.WriteLine();
+                Console.WriteLine(se.Response.Body.ReadAsStringAsync().Result);
+            }
         }
     }
 

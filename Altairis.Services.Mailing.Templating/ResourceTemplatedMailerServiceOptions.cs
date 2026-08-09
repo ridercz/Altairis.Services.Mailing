@@ -1,7 +1,8 @@
 namespace Altairis.Services.Mailing.Templating;
 
 public class ResourceTemplatedMailerServiceOptions {
-    public Type ResourceType { get; set; }
+
+    public required Type ResourceType { get; set; }
 
     public string SubjectKeyFormatString { get; set; } = "{0}_Subject";
 
@@ -14,4 +15,5 @@ public class ResourceTemplatedMailerServiceOptions {
     public string BodyTextFormatStringKeyName { get; set; } = "BodyTextFormatString";
 
     public string BodyHtmlFormatStringKeyName { get; set; } = "BodyHtmlFormatString";
+
 }

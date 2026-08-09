@@ -13,22 +13,22 @@ public abstract class MailerServiceBase : IMailerService {
         ArgumentNullException.ThrowIfNull(options);
         this.DefaultFrom = options.DefaultFrom;
         this.DefaultSender = options.DefaultSender;
-        this.BodyTextFormat = options.BodyTextFormat;
-        this.BodyHtmlFormat = options.BodyHtmlFormat;
-        this.SubjectFormat = options.SubjectFormat;
+        this.BodyTextFormat = options.BodyTextFormat ?? "{0}";
+        this.BodyHtmlFormat = options.BodyHtmlFormat ?? "<html><body>{0}</body></html>";
+        this.SubjectFormat = options.SubjectFormat ?? "{0}";
     }
 
     // Configuration properties
 
-    public MailAddress DefaultFrom { get; set; }
+    public MailAddress? DefaultFrom { get; set; }
 
-    public MailAddress DefaultSender { get; set; }
+    public MailAddress? DefaultSender { get; set; }
 
-    public string BodyTextFormat { get; set; }
+    public string BodyTextFormat { get; set; } = "{0}";
 
-    public string BodyHtmlFormat { get; set; }
+    public string BodyHtmlFormat { get; set; } = "<html><body>{0}</body></html>";
 
-    public string SubjectFormat { get; set; }
+    public string SubjectFormat { get; set; } = "{0}";
 
     // Send message
 
@@ -37,18 +37,18 @@ public abstract class MailerServiceBase : IMailerService {
 
         // Prepare formatted body
         message.GetBodyParts(out var bodyText, out var bodyHtml);
-        bodyText = this.GetFormattedString(this.BodyTextFormat, bodyText);
-        bodyHtml = this.GetFormattedString(this.BodyHtmlFormat, bodyHtml);
+        bodyText = GetFormattedString(this.BodyTextFormat, bodyText ?? string.Empty);
+        bodyHtml = GetFormattedString(this.BodyHtmlFormat, bodyHtml ?? string.Empty);
 
         // Create formatted message copy
         var newMessage = new MailMessage {
             BodyEncoding = message.BodyEncoding,
             DeliveryNotificationOptions = message.DeliveryNotificationOptions,
-            From = message.From ?? this.DefaultFrom,
+            From = message.From ?? this.DefaultFrom ?? throw new InvalidOperationException("From address cannot be null."),
             HeadersEncoding = message.HeadersEncoding,
             Priority = message.Priority,
-            Sender = message.Sender ?? this.DefaultSender,
-            Subject = this.GetFormattedString(this.SubjectFormat, message.Subject),
+            Sender = message.Sender ?? this.DefaultSender ?? throw new InvalidOperationException("Sender address cannot be null."),
+            Subject = GetFormattedString(this.SubjectFormat, message.Subject),
             SubjectEncoding = message.SubjectEncoding
         };
         foreach (var item in message.To) {
@@ -91,10 +91,6 @@ public abstract class MailerServiceBase : IMailerService {
 
     // Helper methods
 
-    private string GetFormattedString(string format, string s) {
-        if (string.IsNullOrWhiteSpace(s)) return s;
-        if (string.IsNullOrWhiteSpace(format)) return s;
-        return string.Format(format, s);
-    }
+    private static string GetFormattedString(string format, string s) => string.IsNullOrWhiteSpace(s) || string.IsNullOrWhiteSpace(format) ? s : string.Format(format, s);
 
 }

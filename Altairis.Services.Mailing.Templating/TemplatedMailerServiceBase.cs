@@ -5,21 +5,19 @@ using System.Text;
 namespace Altairis.Services.Mailing.Templating;
 
 public abstract class TemplatedMailerServiceBase(IMailerService mailerService) : ITemplatedMailerService {
-    protected MailMessage ExpandTemplatedMessage(TemplatedMailMessageDto templateMessage, object values, string subjectTemplate, string bodyTextTemplate = null, string bodyHtmlTemplate = null, CultureInfo culture = null) {
-        ArgumentNullException.ThrowIfNull(templateMessage);
-        ArgumentNullException.ThrowIfNull(values);
-        ArgumentNullException.ThrowIfNull(subjectTemplate);
+
+    protected static MailMessage ExpandTemplatedMessage(TemplatedMailMessageDto templateMessage, object values, string subjectTemplate, string? bodyTextTemplate = null, string? bodyHtmlTemplate = null, CultureInfo? culture = null) {
         if (string.IsNullOrWhiteSpace(subjectTemplate)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(subjectTemplate));
         if (string.IsNullOrWhiteSpace(bodyTextTemplate) && string.IsNullOrWhiteSpace(bodyHtmlTemplate)) throw new ArgumentException($"At least one of {nameof(bodyTextTemplate)} and {nameof(bodyHtmlTemplate)} must be non-empty string.");
 
         var r = new TemplateReplacer(values, culture ?? CultureInfo.CurrentCulture);
-        var bodyText = r.ReplacePlaceholders(bodyTextTemplate);
-        var bodyHtml = r.ReplacePlaceholders(bodyHtmlTemplate);
+        var bodyText = r.ReplacePlaceholders(bodyTextTemplate ?? string.Empty);
+        var bodyHtml = r.ReplacePlaceholders(bodyHtmlTemplate ?? string.Empty);
         var newMessage = new MailMessage {
             Subject = r.ReplacePlaceholders(subjectTemplate),
-            From = templateMessage.From,
-            Sender = templateMessage.Sender
+            From = templateMessage.From ?? throw new InvalidOperationException("From address cannot be null."),
         };
+        if (templateMessage.Sender != null) newMessage.Sender = templateMessage.Sender;
         foreach (var item in templateMessage.To) {
             newMessage.To.Add(item);
         }
@@ -62,7 +60,7 @@ public abstract class TemplatedMailerServiceBase(IMailerService mailerService) :
         ArgumentNullException.ThrowIfNull(values);
 
         this.GetTemplates(message.TemplateName, out var subjectTemplate, out var bodyTextTemplate, out var bodyHtmlTemplate, uiCulture);
-        var newMessage = this.ExpandTemplatedMessage(message, values, subjectTemplate, bodyTextTemplate, bodyHtmlTemplate, culture);
+        var newMessage = ExpandTemplatedMessage(message, values, subjectTemplate, bodyTextTemplate, bodyHtmlTemplate, culture);
         return mailerService.SendMessageAsync(newMessage);
     }
 }

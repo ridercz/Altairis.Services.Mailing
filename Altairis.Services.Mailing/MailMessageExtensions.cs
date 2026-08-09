@@ -5,7 +5,7 @@ namespace Altairis.Services.Mailing;
 
 public static class MailMessageExtensions {
 
-    public static void GetBodyParts(this MailMessage message, out string bodyText, out string bodyHtml) {
+    public static void GetBodyParts(this MailMessage message, out string? bodyText, out string? bodyHtml) {
         bodyText = message.IsBodyHtml ? null : message.Body;
         bodyHtml = message.IsBodyHtml ? message.Body : null;
 

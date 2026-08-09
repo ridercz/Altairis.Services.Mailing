@@ -15,6 +15,6 @@ public class MandrillException : Exception {
 
     public MandrillException(string message, Exception innerException) : base(message, innerException) { }
 
-    public IEnumerable<MandrillSendMessageResponse> Results { get; }
+    public IEnumerable<MandrillSendMessageResponse>? Results { get; }
 
 }

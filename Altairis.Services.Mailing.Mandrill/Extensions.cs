@@ -8,6 +8,7 @@ internal static class Extensions {
     public static MandrillMessage ToMandrillMessage(this MailMessage message) {
         if (message.Sender != null) throw new NotSupportedException("Sender header is not supported by Mandrill.");
         if (message.ReplyToList.Count > 1) throw new NotSupportedException("Only one Reply-To header is supported by Mandrill.");
+        if (message.From == null) throw new ArgumentException("From address must be specified.", nameof(message));
 
         // Add standard header fields
         var msg = new MandrillMessage {
@@ -23,7 +24,8 @@ internal static class Extensions {
 
         // Add custom header fields
         foreach (var item in message.Headers.AllKeys) {
-            msg.Headers.Add(item, message.Headers[item]);
+            if (item is null) throw new InvalidOperationException("Header key cannot be null.");
+            msg.Headers.Add(item, message.Headers[item] ?? throw new InvalidOperationException($"Header value for key '{item}' cannot be null."));
         }
 
         // Construct body
@@ -46,11 +48,9 @@ internal static class Extensions {
         return msg;
     }
 
-    public static List<MandrillMailAddress> ToMandrillAddress(this IEnumerable<MailAddress> addresses, MandrillMailAddressType type = MandrillMailAddressType.To)
-        => [.. addresses.Select(x => ToMandrillAddress(x, type))];
+    public static List<MandrillMailAddress> ToMandrillAddress(this IEnumerable<MailAddress> addresses, MandrillMailAddressType type = MandrillMailAddressType.To) => addresses.Select(x => x.ToMandrillAddress(type)).Where(x => x is not null).Cast<MandrillMailAddress>().ToList();
 
-
-    public static MandrillMailAddress ToMandrillAddress(this MailAddress address, MandrillMailAddressType type = MandrillMailAddressType.To)
+    public static MandrillMailAddress? ToMandrillAddress(this MailAddress address, MandrillMailAddressType type = MandrillMailAddressType.To)
         => address is null ? null : new() {
             Email = address.Address,
             Name = address.DisplayName,

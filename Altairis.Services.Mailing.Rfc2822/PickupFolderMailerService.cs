@@ -17,14 +17,14 @@ public class PickupFolderMailerService : MailerServiceBase {
         this.TempFileNameFactory = options.TempFileNameFactory ?? Path.GetTempFileName;
     }
 
-    public PickupFolderMailerService(string pickupFolderName, Func<string> tempFileNameFactory = null)
+    public PickupFolderMailerService(string pickupFolderName, Func<string>? tempFileNameFactory = null)
         : this(new PickupFolderMailerServiceOptions {
             PickupFolderName = pickupFolderName,
-            TempFileNameFactory = tempFileNameFactory
+            TempFileNameFactory = tempFileNameFactory ?? Path.GetTempFileName
         }) { }
 
     protected override async Task SendMessageAsyncInternal(MailMessage message) {
-        ArgumentNullException.ThrowIfNull(message);
+        if (message.From == null) throw new InvalidOperationException("Message must have a from address.");
 
         // Convert to message
         var msg = message.ToMimeMessage();

@@ -13,7 +13,7 @@ public class IndexModel(ITemplatedMailerService mailer) : PageModel {
         await mailer.SendMessageAsync(msg, new {
             MyValue1 = 123,
             MyValue2 = "TEST",
-            NullValue = (string)null
+            NullValue = null as string
         });
 
         // Redirect
