@@ -13,8 +13,7 @@ public class MandrillMailerService(MandrillMailerServiceOptions options) : Maile
 
     public bool TrackClicks { get; } = options.TrackClicks;
 
-    public string TrackingDomain { get; } = options.TrackingDomain;
-
+    public string? TrackingDomain { get; } = options.TrackingDomain;
 
     protected override async Task SendMessageAsyncInternal(MailMessage message) {
         ArgumentNullException.ThrowIfNull(message);
