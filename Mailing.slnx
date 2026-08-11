@@ -1,30 +1,30 @@
 <Solution>
-  <Folder Name="/Core/">
+  <Folder Name="/00 Misc/">
+    <File Path=".gitignore" />
+    <File Path="CODE_OF_CONDUCT.md" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/01 Core/">
     <Project Path="Altairis.Services.Mailing.Templating/Altairis.Services.Mailing.Templating.csproj" />
     <Project Path="Altairis.Services.Mailing/Altairis.Services.Mailing.csproj" />
   </Folder>
-  <Folder Name="/Implementations/">
+  <Folder Name="/02 Implementations/">
     <Project Path="Altairis.Services.Mailing.Mandrill/Altairis.Services.Mailing.Mandrill.csproj" />
     <Project Path="Altairis.Services.Mailing.Rfc2822/Altairis.Services.Mailing.Rfc2822.csproj" />
     <Project Path="Altairis.Services.Mailing.SendGrid/Altairis.Services.Mailing.SendGrid.csproj" />
     <Project Path="Altairis.Services.Mailing.SystemNetMail/Altairis.Services.Mailing.SystemNetMail.csproj" />
   </Folder>
-  <Folder Name="/Queue/">
-    <Project Path="Altairis.Services.Mailing.QueueSender/Altairis.Services.Mailing.QueueSender.csproj" Id="e3a94f2d-eeb3-4c59-a2c8-5a9c8b27d78f" />
+  <Folder Name="/03 AzureQueue/">
+    <Project Path="Altairis.Services.Mailing.AzureQueueSender/Altairis.Services.Mailing.AzureQueueSender.csproj" />
   </Folder>
-  <Folder Name="/Samples/">
+  <Folder Name="/XX Samples/">
     <Project Path="SampleTemplatedMailing/SampleTemplatedMailing.csproj" />
   </Folder>
-  <Folder Name="/Tests/">
+  <Folder Name="/XX Tests/">
     <Project Path="Altairis.Services.Mailing.Rfc2822.Tests/Altairis.Services.Mailing.Rfc2822.Tests.csproj" />
     <Project Path="Altairis.Services.Mailing.SendGrid.IntegrationTests/Altairis.Services.Mailing.SendGrid.IntegrationTests.csproj" />
     <Project Path="Altairis.Services.Mailing.SystemNetMail.Tests/Altairis.Services.Mailing.SystemNetMail.Tests.csproj" />
     <Project Path="Altairis.Services.Mailing.Templating.Tests/Altairis.Services.Mailing.Templating.Tests.csproj" />
-  </Folder>
-  <Folder Name="/_Misc/">
-    <File Path=".gitignore" />
-    <File Path="CODE_OF_CONDUCT.md" />
-    <File Path="LICENSE" />
-    <File Path="README.md" />
   </Folder>
 </Solution>
