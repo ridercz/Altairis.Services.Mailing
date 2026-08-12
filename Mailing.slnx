@@ -10,13 +10,11 @@
     <Project Path="Altairis.Services.Mailing/Altairis.Services.Mailing.csproj" />
   </Folder>
   <Folder Name="/02 Implementations/">
+    <Project Path="Altairis.Services.Mailing.AzureQueue/Altairis.Services.Mailing.AzureQueue.csproj" />
     <Project Path="Altairis.Services.Mailing.Mandrill/Altairis.Services.Mailing.Mandrill.csproj" />
     <Project Path="Altairis.Services.Mailing.Rfc2822/Altairis.Services.Mailing.Rfc2822.csproj" />
     <Project Path="Altairis.Services.Mailing.SendGrid/Altairis.Services.Mailing.SendGrid.csproj" />
     <Project Path="Altairis.Services.Mailing.SystemNetMail/Altairis.Services.Mailing.SystemNetMail.csproj" />
-  </Folder>
-  <Folder Name="/03 AzureQueue/">
-    <Project Path="Altairis.Services.Mailing.AzureQueueSender/Altairis.Services.Mailing.AzureQueueSender.csproj" />
   </Folder>
   <Folder Name="/XX Samples/">
     <Project Path="SampleTemplatedMailing/SampleTemplatedMailing.csproj" />
