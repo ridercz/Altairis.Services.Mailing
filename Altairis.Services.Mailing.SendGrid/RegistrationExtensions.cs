@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Altairis.Services.Mailing;
 
-public static class AltairisServicesMailingSendGridRegistrationExtensions {
+public static class SendGridRegistrationExtensions {
 
     public static IServiceCollection AddSendGridMailerService(this IServiceCollection services, SendGridMailerServiceOptions options) {
         services.AddSingleton<IMailerService>(new SendGridMailerService(options));

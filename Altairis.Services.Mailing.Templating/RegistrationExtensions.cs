@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Altairis.Services.Mailing;
 
-public static class AltairisServicesMailingTemplatingRegistrationExtensions {
+public static class TemplatingRegistrationExtensions {
 
     public static IServiceCollection AddResourceTemplatedMailerService(this IServiceCollection services, ResourceTemplatedMailerServiceOptions options) {
         services.AddSingleton(options);

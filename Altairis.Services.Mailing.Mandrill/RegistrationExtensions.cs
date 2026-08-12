@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Altairis.Services.Mailing;
 
-public static class AltairisServicesMailingMandrillRegistrationExtensions {
+public static class MandrillRegistrationExtensions {
 
     public static IServiceCollection AddMandrillMailerService(this IServiceCollection services, MandrillMailerServiceOptions options) {
         services.AddSingleton<IMailerService>(new MandrillMailerService(options));

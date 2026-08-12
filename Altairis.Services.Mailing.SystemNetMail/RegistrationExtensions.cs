@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Altairis.Services.Mailing;
 
-public static class AltairisServicesMailingSystemNetMailRegistrationExtensions {
+public static class SystemNetMailRegistrationExtensions {
 
     public static IServiceCollection AddPickupFolderMailerService(this IServiceCollection services, PickupFolderMailerServiceOptions options) {
         services.AddSingleton<IMailerService>(new PickupFolderMailerService(options));
