@@ -47,10 +47,13 @@ public abstract class MailerServiceBase : IMailerService {
             From = message.From ?? this.DefaultFrom ?? throw new InvalidOperationException("From address cannot be null."),
             HeadersEncoding = message.HeadersEncoding,
             Priority = message.Priority,
-            Sender = message.Sender ?? this.DefaultSender ?? throw new InvalidOperationException("Sender address cannot be null."),
             Subject = GetFormattedString(this.SubjectFormat, message.Subject),
             SubjectEncoding = message.SubjectEncoding
         };
+        
+        if (message.Sender != null) newMessage.Sender = message.Sender;
+        message.Sender ??= this.DefaultSender;
+
         foreach (var item in message.To) {
             newMessage.To.Add(item);
         }
