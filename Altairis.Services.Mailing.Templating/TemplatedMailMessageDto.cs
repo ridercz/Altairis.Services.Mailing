@@ -13,22 +13,22 @@ public class TemplatedMailMessageDto {
         if (recipient != null) this.To.Add(recipient);
     }
 
-    public MailAddress? From { get; set; }
-
-    public MailAddress? Sender { get; set; }
-
-    public IList<MailAddress> To { get; set; } = [];
-
-    public IList<MailAddress> Cc { get; set; } = [];
+    public IList<Attachment> Attachments { get; set; } = [];
 
     public IList<MailAddress> Bcc { get; set; } = [];
 
-    public IList<MailAddress> ReplyTo { get; set; } = [];
+    public IList<MailAddress> Cc { get; set; } = [];
 
     public IList<KeyValuePair<string, string>> CustomHeaders { get; set; } = [];
 
-    public IList<Attachment> Attachments { get; set; } = [];
+    public MailAddress? From { get; set; }
+
+    public IList<MailAddress> ReplyTo { get; set; } = [];
+
+    public MailAddress? Sender { get; set; }
 
     public string TemplateName { get; set; }
+
+    public IList<MailAddress> To { get; set; } = [];
 
 }
