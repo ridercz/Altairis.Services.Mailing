@@ -12,15 +12,13 @@
   <Folder Name="/02 Implementations/">
     <Project Path="Altairis.Services.Mailing.AzureQueue/Altairis.Services.Mailing.AzureQueue.csproj" />
     <Project Path="Altairis.Services.Mailing.Mandrill/Altairis.Services.Mailing.Mandrill.csproj" />
-    <Project Path="Altairis.Services.Mailing.Rfc2822/Altairis.Services.Mailing.Rfc2822.csproj" />
     <Project Path="Altairis.Services.Mailing.SendGrid/Altairis.Services.Mailing.SendGrid.csproj" />
   </Folder>
   <Folder Name="/XX Samples/">
-    <Project Path="SampleAzureQueue/SampleAzureQueue.csproj" Id="7a9f1b55-91b1-495d-b73a-7d0cee16cfef" />
+    <Project Path="SampleAzureQueue/SampleAzureQueue.csproj" />
     <Project Path="SampleTemplatedMailing/SampleTemplatedMailing.csproj" />
   </Folder>
   <Folder Name="/XX Tests/">
-    <Project Path="Altairis.Services.Mailing.Rfc2822.Tests/Altairis.Services.Mailing.Rfc2822.Tests.csproj" />
     <Project Path="Altairis.Services.Mailing.SendGrid.IntegrationTests/Altairis.Services.Mailing.SendGrid.IntegrationTests.csproj" />
     <Project Path="Altairis.Services.Mailing.Templating.Tests/Altairis.Services.Mailing.Templating.Tests.csproj" />
     <Project Path="Altairis.Services.Mailing.Tests/Altairis.Services.Mailing.Tests.csproj" />
