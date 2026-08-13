@@ -4,6 +4,21 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageIcon>NuGet-128x128.png</PackageIcon>
+		<Authors>Michal Altair Valášek</Authors>
+		<Company>Altairis, s. r. o.</Company>
+		<Description>E-mail sending services for ASP.NET Core applications.</Description>
+		<Copyright>(c) Altairis, 2017-2026</Copyright>
+		<PackageId>Altairis.Services.Mailing.AzureQueue</PackageId>
+		<Product>Altairis.Services.Mailing</Product>
+		<PackageProjectUrl>https://github.com/ridercz/Altairis.Services.Mailing</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/ridercz/Altairis.Services.Mailing</RepositoryUrl>
+		<PackageOutputPath>../dist</PackageOutputPath>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,4 +30,14 @@
 		<ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\NuGet-128x128.png">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 </Project>
