@@ -17,6 +17,7 @@
     <Project Path="Altairis.Services.Mailing.SystemNetMail/Altairis.Services.Mailing.SystemNetMail.csproj" />
   </Folder>
   <Folder Name="/XX Samples/">
+    <Project Path="SampleAzureQueue/SampleAzureQueue.csproj" Id="7a9f1b55-91b1-495d-b73a-7d0cee16cfef" />
     <Project Path="SampleTemplatedMailing/SampleTemplatedMailing.csproj" />
   </Folder>
   <Folder Name="/XX Tests/">

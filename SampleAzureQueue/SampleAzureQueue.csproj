@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>SampleAzureQueue</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Altairis.Services.Mailing.AzureQueue\Altairis.Services.Mailing.AzureQueue.csproj" />
+		<ProjectReference Include="..\Altairis.Services.Mailing.SystemNetMail\Altairis.Services.Mailing.SystemNetMail.csproj" />
+		<ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
+	</ItemGroup>
+
+</Project>

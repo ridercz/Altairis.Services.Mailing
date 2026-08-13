@@ -1,12 +1,71 @@
 using System.Net.Mail;
+using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
 using Altairis.Services.Mailing.AzureQueue.Dto;
-using MessagePack;
-using MessagePack.Resolvers;
 
 namespace Altairis.Services.Mailing.AzureQueue;
 
 internal static class Extensions {
-    private static readonly MessagePackSerializerOptions MsgPackOptions = MessagePackSerializerOptions.Standard.WithResolver(ContractlessStandardResolver.Instance).WithCompression(MessagePackCompression.Lz4BlockArray);
+
+    public static async Task EnsureClientsExists(this IHasAzureClients service) {
+        var options = service.ServiceOptions;
+
+        // Ensure queue client using connection string if queue SAS URI factory is not provided
+        if (options.QueueSasUriFactory == null) {
+            if (service.QueueClient == null) {
+                if (string.IsNullOrEmpty(options.ConnectionString) || string.IsNullOrEmpty(options.QueueName)) throw new ArgumentException("Either queue SAS URI factory or connection string and queue name must be provided.", nameof(options));
+
+                service.QueueClient = new QueueClient(options.ConnectionString, options.QueueName);
+                await service.QueueClient.CreateIfNotExistsAsync();
+            }
+        } else if (DateTimeOffset.UtcNow >= service.QueueSasRefreshTime) {
+            // Refresh queue SAS token and queue client
+            var queueSasUri = await options.QueueSasUriFactory();
+            var queueExpirationTime = getSasExpirationTime(queueSasUri);
+
+            if (options.QueueSasTokenRefreshBeforeExpiration == TimeSpan.MaxValue) {
+                var ttl = queueExpirationTime - DateTimeOffset.UtcNow;
+                service.QueueSasRefreshTime = DateTimeOffset.UtcNow + TimeSpan.FromTicks(ttl.Ticks * 2 / 3);
+            } else {
+                service.QueueSasRefreshTime = queueExpirationTime - options.QueueSasTokenRefreshBeforeExpiration;
+            }
+
+            service.QueueClient = new QueueClient(queueSasUri);
+        }
+
+        // Ensure blob container client using connection string if container SAS URI factory is not provided
+        if (options.ContainerSasUriFactory == null) {
+            if (service.ContainerClient == null) {
+                if (string.IsNullOrEmpty(options.ConnectionString) || string.IsNullOrEmpty(options.ContainerName)) throw new ArgumentException("Either container SAS URI factory or connection string and container name must be provided.", nameof(options));
+
+                service.ContainerClient = new BlobContainerClient(options.ConnectionString, options.ContainerName);
+                await service.ContainerClient.CreateIfNotExistsAsync();
+            }
+        } else if (DateTimeOffset.UtcNow >= service.ContainerSasRefreshTime) {
+            // Refresh container SAS token and blob container client
+            var containerSasUri = await options.ContainerSasUriFactory();
+            var containerExpirationTime = getSasExpirationTime(containerSasUri);
+
+            if (options.ContainerSasTokenRefreshBeforeExpiration == TimeSpan.MaxValue) {
+                var ttl = containerExpirationTime - DateTimeOffset.UtcNow;
+                service.ContainerSasRefreshTime = DateTimeOffset.UtcNow + TimeSpan.FromTicks(ttl.Ticks * 2 / 3);
+            } else {
+                service.ContainerSasRefreshTime = containerExpirationTime - options.ContainerSasTokenRefreshBeforeExpiration;
+            }
+
+            service.ContainerClient = new BlobContainerClient(containerSasUri);
+        }
+
+        static DateTimeOffset getSasExpirationTime(Uri sasUri) {
+            var queryParams = System.Web.HttpUtility.ParseQueryString(sasUri.Query);
+            var seParam = queryParams["se"];
+            return string.IsNullOrEmpty(seParam)
+                ? DateTimeOffset.MaxValue
+                : DateTimeOffset.TryParse(seParam, out var expirationTime)
+                ? expirationTime
+                : throw new InvalidOperationException("SAS URI contains invalid expiration time.");
+        }
+    }
 
     // Convert MailMessage to QueueMailMessage
 
@@ -20,6 +79,7 @@ internal static class Extensions {
             Cc = [.. message.CC.ToQueueMailAddress()],
             Bcc = [.. message.Bcc.ToQueueMailAddress()],
             Subject = message.Subject,
+            To = [.. message.To.ToQueueMailAddress()],
         };
 
         foreach (var item in message.Headers.AllKeys) {
@@ -53,6 +113,10 @@ internal static class Extensions {
 
         if (message.Sender is not null) msg.Sender = message.Sender.ToMailAddress() ?? throw new InvalidOperationException("Invalid Sender address.");
 
+        foreach (var item in message.To.ToMailAddress()) {
+            msg.To.Add(item);
+        }
+
         foreach (var item in message.ReplyTo.ToMailAddress()) {
             msg.ReplyToList.Add(item);
         }
@@ -85,11 +149,5 @@ internal static class Extensions {
 
     public static MailAddress? ToMailAddress(this QueueMailAddress address)
         => address is null ? null : new MailAddress(address.Email, address.DisplayName);
-
-    // MessagePack (with LZ4) serialization helpers
-
-    public static byte[] ToMessagePack(this QueueMailMessage message) => MessagePackSerializer.Serialize(message, MsgPackOptions);
-
-    public static QueueMailMessage FromMessagePack(this byte[] data) => MessagePackSerializer.Deserialize<QueueMailMessage>(data, MsgPackOptions);
 
 }

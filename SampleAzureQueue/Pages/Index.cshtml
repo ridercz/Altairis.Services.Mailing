@@ -1,0 +1,36 @@
+﻿@page
+@model SampleAzureQueue.Pages.IndexModel
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Azure Queue Mail Demo</title>
+</head>
+<body>
+    <h1>Azure Queue Mail Demo</h1>
+    @if (Model.MessageSent) {
+        <p>Message was sent.</p>
+    }
+    <form method="post">
+        <div>
+            <label for="Recipient">Recipient</label>
+            <input type="email" id="Recipient" asp-for="Recipient" required />
+            <span asp-validation-for="Recipient"></span>
+        </div>
+        <div>
+            <label for="Subject">Subject</label>
+            <input type="text" id="Subject" asp-for="Subject" required />
+            <span asp-validation-for="Subject"></span>
+        </div>
+        <div>
+            <label for="Body">Body</label>
+            <textarea id="Body" asp-for="Body" rows="6" required></textarea>
+            <span asp-validation-for="Body"></span>
+        </div>
+        <div>
+            <button type="submit">Send</button>
+        </div>
+    </form>
+</body>
+</html>

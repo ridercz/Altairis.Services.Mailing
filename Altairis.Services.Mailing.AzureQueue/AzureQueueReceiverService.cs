@@ -1,99 +1,85 @@
-﻿using Azure.Storage.Queues;
+﻿using System.Text.Json;
+using Altairis.Services.Mailing.AzureQueue.Dto;
+using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Altairis.Services.Mailing.AzureQueue;
 
-public class AzureQueueReceiverService(AzureQueueMailerServiceOptions options, IMailerService mailerService, ILogger<AzureQueueReceiverService>? logger) : BackgroundService {
-    private DateTimeOffset sasRefreshTime;
-    private QueueClient queueClient = null!;
+public class AzureQueueReceiverService : BackgroundService, IHasAzureClients {
+    internal const string MessagePrefixBlob = "blob:";
+    private readonly IMailerService mailerService;
+    private readonly ILogger<AzureQueueReceiverService>? logger;
+
+    public AzureQueueReceiverService(AzureQueueMailerServiceOptions options, [FromKeyedServices(nameof(AzureQueueReceiverService))] IMailerService mailerService, ILogger<AzureQueueReceiverService>? logger) {
+        if (options.QueueSasUriFactory == null && (string.IsNullOrWhiteSpace(options.ConnectionString) || string.IsNullOrWhiteSpace(options.QueueName))) throw new ArgumentException("Either queue SAS URI factory or connection string and queue name must be provided.", nameof(options));
+        if (options.ContainerSasUriFactory == null && (string.IsNullOrWhiteSpace(options.ConnectionString) || string.IsNullOrWhiteSpace(options.ContainerName))) throw new ArgumentException("Either container SAS URI factory or connection string and container name must be provided.", nameof(options));
+
+        this.ServiceOptions = options;
+        this.mailerService = mailerService;
+        this.logger = logger;
+    }
+
+    public AzureQueueMailerServiceOptions ServiceOptions { get; }
+
+    public QueueClient QueueClient { get; set; } = null!;
+
+    public BlobContainerClient ContainerClient { get; set; } = null!;
+
+    public DateTimeOffset QueueSasRefreshTime { get; set; }
+
+    public DateTimeOffset ContainerSasRefreshTime { get; set; }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
         while (!stoppingToken.IsCancellationRequested) {
             // Refresh SAS token if needed
-            await this.EnsureQueueClientExists();
+            await this.EnsureClientsExists();
 
             // Receive next message from the queue
-            var qMsg = await this.queueClient.ReceiveMessageAsync(options.MessageVisibilityTimeout, stoppingToken);
-            if (qMsg.Value != null) {
-                try {
-                    // Deserialize message from MessagePack
-                    var msg = qMsg.Value.Body.ToArray().FromMessagePack().ToMailMessage();
+            var qMsg = await this.QueueClient.ReceiveMessageAsync(this.ServiceOptions.QueueMessageVisibilityTimeout, stoppingToken);
 
-                    // Send the message using the mailer service
-                    await mailerService.SendMessageAsync(msg);
-
-                    // Delete the message from the queue
-                    await this.queueClient.DeleteMessageAsync(qMsg.Value.MessageId, qMsg.Value.PopReceipt, stoppingToken);
-
-                    // Log information about the processed message
-                    logger?.LogInformation("Message {MessageId} to {Recipients} with subject \"{Subject}\" processed and deleted from queue.", qMsg.Value.MessageId, string.Join(", ", msg.To.Select(x => x.Address)), msg.Subject);
-                } catch (Exception ex) {
-                    if(qMsg.Value.DequeueCount < options.MessageRetryCount) {
-                        // Log warning about the failed message processing, but do not delete it from the queue, so it can be retried
-                        logger?.LogWarning(ex, "Failed to process message {MessageId}, will retry (attempt {Attempt}/{MaxAttempts}).", qMsg.Value.MessageId, qMsg.Value.DequeueCount, options.MessageRetryCount);
-                    } else {
-                        // Log error about the failed message processing and delete it from the queue
-                        logger?.LogError(ex, "Failed to process message {MessageId} after {MaxAttempts} attempts, deleting from queue.", qMsg.Value.MessageId, options.MessageRetryCount);
-                        await this.queueClient.DeleteMessageAsync(qMsg.Value.MessageId, qMsg.Value.PopReceipt, stoppingToken);
-                        
-                        // Rethrow exception if configured to do so
-                        if (options.ThrowExceptionOnPoisonMessages) throw; 
-                    }
-                }
+            // If there is no message, wait for the next polling interval
+            if (qMsg.Value == null) {
+                await Task.Delay(this.ServiceOptions.QueuePollingInterval, stoppingToken);
+                continue;
             }
 
-            // Wait for the next polling interval
-            await Task.Delay(options.QueuePollingInterval, stoppingToken);
+            // Process the message
+            try {
+                // Validate message format
+                if (!qMsg.Value.MessageText.StartsWith(MessagePrefixBlob)) throw new InvalidOperationException($"Invalid message format: {qMsg.Value.MessageText}");
+
+                // Deserialize message from JSON
+                var blobName = qMsg.Value.MessageText[MessagePrefixBlob.Length..];
+                var blobClient = this.ContainerClient.GetBlobClient(blobName);
+                var json = await blobClient.DownloadContentAsync(stoppingToken);
+                var msg = JsonSerializer.Deserialize<QueueMailMessage>(json.Value.Content.ToString())?.ToMailMessage() ?? throw new InvalidOperationException("Failed to deserialize message.");
+
+                // Send the message using the mailer service
+                await this.mailerService.SendMessageAsync(msg);
+
+                // Delete the message from the queue and the blob from storage
+                await this.QueueClient.DeleteMessageAsync(qMsg.Value.MessageId, qMsg.Value.PopReceipt, stoppingToken);
+                await blobClient.DeleteIfExistsAsync(cancellationToken: stoppingToken);
+
+                // Log information about the processed message
+                this.logger?.LogInformation("Message {MessageId} to {Recipients} with subject \"{Subject}\" processed and deleted from queue.", qMsg.Value.MessageId, string.Join(", ", msg.To.Select(x => x.Address)), msg.Subject);
+            } catch (Exception ex) {
+                if (qMsg.Value.DequeueCount < this.ServiceOptions.QueueMessageRetryCount) {
+                    // Log warning about the failed message processing, but do not delete it from the queue, so it can be retried
+                    this.logger?.LogWarning(ex, "Failed to process message {MessageId}, will retry (attempt {Attempt}/{MaxAttempts}).", qMsg.Value.MessageId, qMsg.Value.DequeueCount, this.ServiceOptions.QueueMessageRetryCount);
+                } else {
+                    // Log error about the failed message processing and delete it from the queue
+                    this.logger?.LogError(ex, "Failed to process message {MessageId} after {MaxAttempts} attempts, deleting from queue.", qMsg.Value.MessageId, this.ServiceOptions.QueueMessageRetryCount);
+                    await this.QueueClient.DeleteMessageAsync(qMsg.Value.MessageId, qMsg.Value.PopReceipt, stoppingToken);
+
+                    // Rethrow exception if configured to do so
+                    if (this.ServiceOptions.ThrowExceptionOnPoisonMessages) throw;
+                }
+            }
         }
-    }
-
-    // Helpers
-
-    private async Task EnsureQueueClientExists() {
-        // If SAS URI factory is not provided, use connection string and queue name to create the queue client if needed
-        if (options.SasUriFactory == null) {
-            if (this.queueClient != null) return;
-            if (string.IsNullOrEmpty(options.ConnectionString) || string.IsNullOrEmpty(options.QueueName)) throw new ArgumentException("Either SAS URI factory or connection string and queue name must be provided.", nameof(options));
-
-            this.queueClient = new QueueClient(options.ConnectionString, options.QueueName);
-            await this.queueClient.CreateIfNotExistsAsync();
-            logger?.LogInformation("Azure Queue Receiver Service initialized with connection string, using queue {QueueName}.", this.queueClient.Uri);
-            return;
-        }
-
-        // If SAS URI factory is provided, check if the SAS token needs to be refreshed
-        if (DateTimeOffset.UtcNow < this.sasRefreshTime) return;
-
-        // Get new SAS URI and find out its expiration time
-        var sasUri = await options.SasUriFactory();
-        var expirationTime = GetSasExpirationTime(sasUri);
-
-        // Calculate new SAS refresh time
-        if (options.SasTokenRefreshBeforeExpiration == TimeSpan.MaxValue) {
-            // Refresh SAS token at two thirds of its lifetime
-            var ttl = expirationTime - DateTimeOffset.UtcNow;
-            this.sasRefreshTime = DateTimeOffset.UtcNow + TimeSpan.FromTicks(ttl.Ticks * 2 / 3);
-        } else {
-            // Use fixed refresh time before expiration
-            this.sasRefreshTime = expirationTime - options.SasTokenRefreshBeforeExpiration;
-        }
-
-        // Update queue client with new SAS URI
-        this.queueClient = new QueueClient(sasUri);
-
-        // Log information about the new SAS token and refresh time
-        logger?.LogInformation("SAS token refreshed, new expiration time: {ExpirationTime}, next refresh time: {RefreshTime}.", expirationTime, this.sasRefreshTime);
-    }
-
-    private static DateTimeOffset GetSasExpirationTime(Uri sasUri) {
-        var queryParams = System.Web.HttpUtility.ParseQueryString(sasUri.Query);
-        var seParam = queryParams["se"];
-        return string.IsNullOrEmpty(seParam)
-            ? DateTimeOffset.MaxValue // If no expiration time is specified, assume the SAS URI never expires
-            : DateTimeOffset.TryParse(seParam, out var expirationTime)
-            ? expirationTime
-            : throw new InvalidOperationException("SAS URI contains invalid expiration time.");
     }
 
 }
