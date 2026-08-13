@@ -26,7 +26,7 @@ public class SmtpServerMailerService(SmtpServerMailerServiceOptions options) : M
 
         // Send message
         using var mx = new MailKit.Net.Smtp.SmtpClient();
-        await mx.ConnectAsync(this.HostName, this.Port, AllowSsl ? SecureSocketOptions.Auto : SecureSocketOptions.None);
+        await mx.ConnectAsync(this.HostName, this.Port, this.AllowSsl ? SecureSocketOptions.Auto : SecureSocketOptions.None);
         if (this.AllowSsl) mx.ServerCertificateValidationCallback = this.ServerCertificateValidationCallback;
         if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password)) await mx.AuthenticateAsync(this.UserName, this.Password);
         await mx.SendAsync(msg);
