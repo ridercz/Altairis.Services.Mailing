@@ -1,5 +1,3 @@
-using System.Net.Security;
-
 namespace Altairis.Services.Mailing.SystemNetMail;
 
 public class SmtpServerMailerServiceOptions : MailerServiceOptions {

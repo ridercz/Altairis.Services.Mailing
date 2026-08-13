@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Altairis.Services.Mailing.AzureQueue;
+﻿namespace Altairis.Services.Mailing.AzureQueue;
 
 public class AzureQueueMailerServiceOptions : MailerServiceOptions {
 

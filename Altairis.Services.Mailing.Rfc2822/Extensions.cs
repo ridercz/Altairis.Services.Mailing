@@ -1,6 +1,5 @@
 using System.Net.Mail;
 using MimeKit;
-using MimeKit.Encodings;
 
 namespace Altairis.Services.Mailing.Rfc2822;
 
