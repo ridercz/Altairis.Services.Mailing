@@ -1,6 +1,5 @@
 ﻿using System.Net.Mail;
 using Altairis.Services.Mailing;
-using Altairis.Services.Mailing.SystemNetMail;
 using Altairis.Services.Mailing.Templating;
 
 var builder = WebApplication.CreateBuilder(args);

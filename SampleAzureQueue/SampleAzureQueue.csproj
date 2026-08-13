@@ -9,7 +9,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Altairis.Services.Mailing.AzureQueue\Altairis.Services.Mailing.AzureQueue.csproj" />
-		<ProjectReference Include="..\Altairis.Services.Mailing.SystemNetMail\Altairis.Services.Mailing.SystemNetMail.csproj" />
 		<ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
 	</ItemGroup>
 

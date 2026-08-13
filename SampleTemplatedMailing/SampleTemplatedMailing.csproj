@@ -7,7 +7,6 @@
   </PropertyGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\Altairis.Services.Mailing.SystemNetMail\Altairis.Services.Mailing.SystemNetMail.csproj" />
     <ProjectReference Include="..\Altairis.Services.Mailing.Templating\Altairis.Services.Mailing.Templating.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-namespace Altairis.Services.Mailing.SystemNetMail;
+namespace Altairis.Services.Mailing;
 
 public class SmtpServerMailerServiceOptions : MailerServiceOptions {
 

@@ -1,6 +1,5 @@
 using Altairis.Services.Mailing;
 using Altairis.Services.Mailing.AzureQueue;
-using Altairis.Services.Mailing.SystemNetMail;
 using Azure.Storage.Queues;
 
 var builder = WebApplication.CreateBuilder(args);

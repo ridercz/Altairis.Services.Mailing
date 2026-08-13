@@ -2,7 +2,7 @@ using System.Net.Mail;
 using System.Text;
 using Xunit;
 
-namespace Altairis.Services.Mailing.SystemNetMail.Tests;
+namespace Altairis.Services.Mailing.Tests;
 
 public class PickupFolderMailerServiceTests {
 

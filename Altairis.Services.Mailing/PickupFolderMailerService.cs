@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 
-namespace Altairis.Services.Mailing.SystemNetMail;
+namespace Altairis.Services.Mailing;
 
 public class PickupFolderMailerService : MailerServiceBase {
 

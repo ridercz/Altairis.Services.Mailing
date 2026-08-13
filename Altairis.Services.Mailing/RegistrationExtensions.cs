@@ -1,4 +1,3 @@
-using Altairis.Services.Mailing.SystemNetMail;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Altairis.Services.Mailing;

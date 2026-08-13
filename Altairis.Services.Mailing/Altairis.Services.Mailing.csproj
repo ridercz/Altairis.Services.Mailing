@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageId>Altairis.Services.Mailing.Core</PackageId>
+		<PackageId>Altairis.Services.Mailing</PackageId>
 		<Authors>Michal Altair Valášek</Authors>
 		<Company>Altairis, s. r. o.</Company>
 		<Description>E-mail sending services for ASP.NET Core applications.</Description>
@@ -31,6 +31,10 @@
 		  <Pack>True</Pack>
 		  <PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
 	</ItemGroup>
 
 </Project>

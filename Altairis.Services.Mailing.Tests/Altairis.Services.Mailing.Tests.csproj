@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Altairis.Services.Mailing.SystemNetMail\Altairis.Services.Mailing.SystemNetMail.csproj" />
     <ProjectReference Include="..\Altairis.Services.Mailing\Altairis.Services.Mailing.csproj" />
   </ItemGroup>
 
