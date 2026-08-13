@@ -23,7 +23,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Mandrill.net" Version="10.0.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.10" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.11" />
 	</ItemGroup>
 
 	<ItemGroup>
