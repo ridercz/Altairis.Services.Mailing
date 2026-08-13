@@ -19,4 +19,10 @@ public static class SystemNetMailRegistrationExtensions {
         return services;
     }
 
+    public static IServiceCollection AddSmtpServerMailerService(this IServiceCollection services, SmtpServerMailerServiceOptions options) {
+        ArgumentNullException.ThrowIfNull(options);
+        services.AddSingleton<IMailerService>(new SmtpServerMailerService(options));
+        return services;
+    }
+
 }
